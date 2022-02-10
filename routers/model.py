@@ -1,4 +1,4 @@
-from ..config import settings
+from config import settings
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse
@@ -6,7 +6,6 @@ from fastapi.responses import FileResponse
 from torchvision import transforms
 from PIL import Image
 
-import pickle
 import torch
 import io
 import os
