@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'release/*'
+
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/*'
+
+env:
+  MAIN_REPO: Direct4Ag/ag-services
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - name: Check out source code
+        uses: actions/checkout@v2
+
+      # calculate some variables that are used later
+      - name: version information
+        run: |
+          if [ "${{ github.event.release.target_commitish }}" != "" ]; then
+            BRANCH="${{ github.event.release.target_commitish }}"
+          elif [[ "${{github.event_name}}" == "pull_request" ]]; then
+            BRANCH="PR-${{github.event.pull_request.number}}"
+          else
+            if [[ $GITHUB_REF =~ "release/" ]]; then
+              BRANCH="release"
+            else
+              BRANCH=${GITHUB_REF##*/}
+            fi
+          fi
+          
+          echo "GITHUB_BRANCH=${BRANCH}" >> $GITHUB_ENV
+          version=$(awk -F= '/^version/ { print $2}' pyproject.toml | sed 's/[ "]//g')
+          
+          if [ "$BRANCH" == "main" ]; then
+            tags="latest"
+            oldversion=""
+            while [ "${oldversion}" != "${version}" ]; do
+              oldversion="${version}"
+              tags="${tags},${version}"
+              version=${version%.*}
+            done
+            echo "VERSION=${version}" >> $GITHUB_ENV
+            echo "TAGS=${tags}" >> $GITHUB_ENV
+          elif [ "$BRANCH" == "develop" ]; then
+            echo "VERSION=develop" >> $GITHUB_ENV
+            echo "TAGS=develop" >> $GITHUB_ENV
+          elif [ "$BRANCH" == "release" ]; then
+            echo "VERSION=${version}-rc" >> $GITHUB_ENV
+            echo "TAGS=${version}-rc" >> $GITHUB_ENV
+          else
+            echo "VERSION=testing" >> $GITHUB_ENV
+            STRIPPED_TAGS=${BRANCH/\#/_}
+            echo "TAGS=${STRIPPED_TAGS}" >> $GITHUB_ENV
+          fi 
+
+      # Build image
+      - name: Build docker image
+        uses: elgohr/Publish-Docker-Github-Action@3.04
+        env:
+          BRANCH: ${{ env.GITHUB_BRANCH }}
+          VERSION: ${{ env.VERSION }}
+          BUILDNUMBER: ${{ github.run_number }}
+          GITSHA1: ${{ github.sha }}
+        with:
+          registry: hub.ncsa.illinois.edu
+          dockerfile: Dockerfile
+          name: Direct4Ag/direct4ag-api
+          tags: "${{ env.TAGS }}"
+          buildargs: BRANCH,VERSION,BUILDNUMBER,GITSHA1
+          no_push: true
+
+      #  Publish image
+      - name: Publish docker image to NCSA Hub
+        if: |
+          github.repository == env.MAIN_REPO &&
+          (env.GITHUB_BRANCH == 'develop' || env.GITHUB_BRANCH == 'main' || env.GITHUB_BRANCH == 'release')
+        uses: elgohr/Publish-Docker-Github-Action@3.04
+        env:
+          BRANCH: ${{ env.GITHUB_BRANCH }}
+          VERSION: ${{ env.VERSION }}
+          BUILDNUMBER: ${{ github.run_number }}
+          GITSHA1: ${{ github.sha }}
+        with:
+          registry: hub.ncsa.illinois.edu
+          dockerfile: Dockerfile
+          name: Direct4Ag/direct4ag-api
+          username: ${{ secrets.HUB_USERNAME }}
+          password: ${{ secrets.HUB_PASSWORD }}
+          tags: "${{ env.TAGS }}"
+          buildargs: BRANCH,VERSION,BUILDNUMBER,GITSHA1
