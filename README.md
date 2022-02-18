@@ -1,3 +1,9 @@
+# Digital Infrastructure for Research and Extension on Crops and Technology for Agriculture (DIRECT4AG)
+
+This is the service API for the frontend. 
+
+# README UNDER CONSTRUCTION
+
 A very simple object detection and classification service using FastAPI
 
 To run, install dependencies using poetry ```poetry install``` or follow the manual installation instructions at 
@@ -31,3 +37,24 @@ To install PyTorch see https://pytorch.org/get-started/locally/.
 Resources: 
 * https://pytorch.org/hub/ultralytics_yolov5/
 * https://learnopencv.com/
+
+# Docker
+
+## Build docker container
+
+docker build --progress=plain --tag direct4ag/service:latest .
+
+## Setup Environment
+
+Look at env-example for an example environment file and update parameters with your settings
+
+## Run service with docker
+
+On Linux, you can run the docker image with the following:
+
+docker run -p 8000:8000 --network host --env-file direct4ag-env direct4ag/service:latest
+
+On Mac and other platforms, use:
+
+docker run -p 8000:8000 --env-file direct4ag-env direct4ag/service:latest
+

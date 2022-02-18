@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from config import settings
 
-database = databases.Database(settings.postgres_db_url)
+database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
 
 metadata = sqlalchemy.MetaData()
 
@@ -26,7 +26,7 @@ users = sqlalchemy.Table(
 
 
 engine = sqlalchemy.create_engine(
-    settings.postgres_db_url)
+    settings.SQLALCHEMY_DATABASE_URI)
 metadata.create_all(engine)
 
 router = APIRouter(
