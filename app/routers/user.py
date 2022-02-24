@@ -5,9 +5,10 @@ import sqlalchemy
 from fastapi import FastAPI, APIRouter, HTTPException
 from pydantic import BaseModel
 
-from config import settings
+from app.config import settings
 
-database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
+# database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
+database = databases.Database("postgresql://fast:fast@localhost:5432/geostream")
 
 metadata = sqlalchemy.MetaData()
 
