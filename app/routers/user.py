@@ -7,8 +7,7 @@ from pydantic import BaseModel
 
 from app.config import settings
 
-# database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
-database = databases.Database("postgresql://fast:fast@localhost:5432/geostream")
+database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
 
 metadata = sqlalchemy.MetaData()
 
