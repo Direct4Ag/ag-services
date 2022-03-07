@@ -2,10 +2,10 @@ from typing import List, Optional
 
 import databases
 import sqlalchemy
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from app.config import settings
+from app.core.config import settings
 
 database = databases.Database(settings.SQLALCHEMY_DATABASE_URI)
 

@@ -7,8 +7,8 @@ from pydantic import PostgresDsn, validator
 
 class Settings(BaseSettings):
     main_path: str = os.path.abspath(os.path.dirname(__file__))
-    models_path: str = os.path.join(main_path, "labels")
-    routers_path: str = os.path.join(main_path, "routers")
+    models_path: str = os.path.join(main_path, "../labels")
+    routers_path: str = os.path.join(main_path, "../routers")
 
     POSTGRES_SERVER: str
     POSTGRES_USER: str
