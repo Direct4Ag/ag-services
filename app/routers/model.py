@@ -1,4 +1,4 @@
-from config import settings
+from app.core.config import settings
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse

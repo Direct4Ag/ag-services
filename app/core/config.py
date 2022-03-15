@@ -7,13 +7,14 @@ from pydantic import PostgresDsn, validator
 
 class Settings(BaseSettings):
     main_path: str = os.path.abspath(os.path.dirname(__file__))
-    models_path: str = os.path.join(main_path, "labels")
-    routers_path: str = os.path.join(main_path, "routers")
+    models_path: str = os.path.join(main_path, "../labels")
+    routers_path: str = os.path.join(main_path, "../routers")
 
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
+    POSTGRES_PORT: str
 
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
@@ -30,6 +31,7 @@ class Settings(BaseSettings):
             user=values.get("POSTGRES_USER"),
             password=values.get("POSTGRES_PASSWORD"),
             host=values.get("POSTGRES_SERVER"),
+            port=values.get("POSTGRES_PORT"),
             path=f"/{db_name}",
         )
 

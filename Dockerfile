@@ -15,4 +15,4 @@ RUN pip install -U pip
 RUN pip install poetry
 RUN poetry install
 
-CMD gunicorn -b 0.0.0.0:8000 -w ${WORKERS} -k uvicorn.workers.UvicornWorker main:app
+CMD gunicorn -b 0.0.0.0:8000 -w ${WORKERS} -k uvicorn.workers.UvicornWorker app.main:app

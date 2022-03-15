@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from routers import model
-from routers import item
-from routers import user
+from app.routers import model
+from app.routers import item
+from app.routers import user
 
 import uvicorn
 
