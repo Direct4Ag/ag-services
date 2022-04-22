@@ -10,11 +10,11 @@ class Settings(BaseSettings):
     models_path: str = os.path.join(main_path, "../labels")
     routers_path: str = os.path.join(main_path, "../routers")
 
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    POSTGRES_PORT: str
+    POSTGRES_SERVER: str = "localhost"
+    POSTGRES_USER: str = "fast"
+    POSTGRES_PASSWORD: str = "fast"
+    POSTGRES_DB: str = "geostream"
+    POSTGRES_PORT: str = "5432"
 
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
