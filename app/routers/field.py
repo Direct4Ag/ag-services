@@ -14,7 +14,7 @@ metadata = sqlalchemy.MetaData()
 fields = sqlalchemy.Table(
     "fields",
     metadata,
-    sqlalchemy.Column("gid", sqlalchemy.Integer, primary_key=True),
+    sqlalchemy.Column("field_id", sqlalchemy.Integer, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.String),
     sqlalchemy.Column("lat", sqlalchemy.String),
     sqlalchemy.Column("lon", sqlalchemy.String),
@@ -35,7 +35,7 @@ router = APIRouter(
 
 
 class Field(BaseModel):
-    gid: Optional[int]
+    field_id: Optional[int]
     name: str
     lat: str
     lon: str
@@ -65,26 +65,26 @@ async def read_fields():
     return await database.fetch_all(query)
 
 
-@router.get("/fields/{gid}", response_model=Field)
-async def read_field(*, gid: int):
-    query = f"SELECT * FROM fields WHERE fields.gid={gid};"
+@router.get("/fields/{field_id}", response_model=Field)
+async def read_field(*, field_id: int):
+    query = f"SELECT * FROM fields WHERE fields.field_id={field_id};"
     field = await database.fetch_all(query)
     if len(field) == 0:
         raise HTTPException(status_code=404, detail="Field not found")
     return field[0]
 
 
-@router.delete("/fields/{gid}")
-async def delete_field(*, gid: int):
-    query = f"DELETE FROM fields WHERE fields.gid={gid} RETURNING *;"
+@router.delete("/fields/{field_id}")
+async def delete_field(*, field_id: int):
+    query = f"DELETE FROM fields WHERE fields.field_id={field_id} RETURNING *;"
     deleted = await database.fetch_all(query)
     if len(deleted) == 0:
         raise HTTPException(status_code=404, detail="Field not found")
-    return f"Field with id {gid} was deleted successfully."
+    return f"Field with id {field_id} was deleted successfully."
 
 
 @router.post("/fields/", response_model=Field)
 async def create_field(field: Field):
     query = fields.insert().values(name=field.name, lat=field.lat, lon=field.lon, crop=field.crop)
-    gid = await database.execute(query)
-    return {**field.dict(), "gid": gid}
+    field_id = await database.execute(query)
+    return {**field.dict(), "field_id": field_id}
