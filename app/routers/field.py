@@ -42,13 +42,6 @@ class Field(BaseModel):
     crop: str
 
 
-class FieldIn(BaseModel):
-    name: str
-    lat: str
-    lon: str
-    crop: str
-
-
 @router.on_event("startup")
 async def startup():
     await database.connect()
