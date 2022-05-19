@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.routers import model
 from app.routers import item
 from app.routers import user
+from app.routers import field
 
 import uvicorn
 
@@ -10,6 +11,7 @@ app = FastAPI()
 app.include_router(model.router)
 app.include_router(item.router)
 app.include_router(user.router)
+app.include_router(field.router)
 
 
 @app.get("/")
