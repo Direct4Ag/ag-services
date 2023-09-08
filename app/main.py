@@ -1,22 +1,29 @@
-from fastapi import FastAPI
-from app.routers import model
-from app.routers import item
-from app.routers import user
-from app.routers import field
+from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 
-import uvicorn
+from app.core.config import get_settings
 
-app = FastAPI()
+settings = (
+    get_settings()
+)  # Get the Settings object with all the environment information
 
-app.include_router(model.router)
-app.include_router(item.router)
-app.include_router(user.router)
-app.include_router(field.router)
+app = FastAPI(title=settings.SERVER_NAME)
+
+# Set all CORS enabled origins
+if settings.BACKEND_CORS_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+api_router = APIRouter()
+
+app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 
 
-@app.get("/")
+@app.get("/direct4ag")
 async def root():
-    return {"message": "Hello Bigger Applications!"}
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    return {"message": "Welcome to the Direct4Ag service"}

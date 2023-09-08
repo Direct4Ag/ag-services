@@ -1,35 +1,24 @@
 [tool.poetry]
-name = "service"
+name = "direct4ag-api"
 version = "0.1.0"
 description = ""
-authors = ["Diego Calderon <diegoac2@illinois.edu>"]
+authors = ["Christopher Navarro <cmnavarr@illinois.edu>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.73.0"
-uvicorn = {extras = ["standard"], version = "^0.17.0"}
-databases = "^0.5.5"
-matplotlib = {version = ">=3.2.2", optional = true}
-opencv-python = {version = ">=4.5.5.62", optional = true}
-numpy = {version = ">=1.18.5", optional = true}
-Pillow = {version = ">=7.1.2"}
-PyYAML = {version = ">=5.3.1", optional = true}
-requests = {version = ">=2.23.0", optional = true}
-scipy = {version = ">=1.4.1", optional = true}
-torch = {version = ">=1.7.0"}
-torchvision = {version = ">=0.8.1"}
-tensorboard = {version = ">=2.4.1", optional = true}
-pandas = {version = ">=1.1.4", optional = true}
-seaborn = {version = ">=0.11.0", optional = true}
-thop = {version = "^0.0.31", optional = true}
-psycopg2-binary = "^2.9.3"
-GeoAlchemy2 = "^0.10.2"
-python-multipart = "^0.0.5"
-asyncpg = "^0.25.0"
+uvicorn = "^0.17.6"
 gunicorn = "^20.1"
-pytest = "^7.1.1"
+alembic = "^1.7.7"
+psycopg2-binary = "^2.9.3"
+SQLAlchemy = {extras = ["mypy"], version = "~1.4"}
+passlib = {extras = ["bcrypt"], version = "~1.7"}
+pydantic = "^1.9.0"
+python-dotenv = ">=0.10.3"
+python-multipart = "~0.0.5"
 
 [tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
