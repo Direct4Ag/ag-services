@@ -1,8 +1,8 @@
 from pydantic import BaseSettings
 
 import os
-from typing import Any, Dict, Optional
-from pydantic import PostgresDsn, validator
+from typing import Any, Dict, Optional, List, Union
+from pydantic import PostgresDsn, validator, AnyHttpUrl
 
 
 class Settings(BaseSettings):
@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     models_path: str = os.path.join(main_path, "../labels")
     routers_path: str = os.path.join(main_path, "../routers")
 
+    ROUTER_PREFIX: str
+    PROJECT_NAME: str
+    SERVER_NAME: str
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -17,9 +20,20 @@ class Settings(BaseSettings):
     POSTGRES_PORT: str
 
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    
+    SERVER_HOST: AnyHttpUrl
 
-    # TODO remove this later once service API is ready - this disables fetching the models
-    LOAD_MODELS: bool = False
+    # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
+    # e.g: '["http://localhost", "http://localhost:3000"]'
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
+
+    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
@@ -36,4 +50,5 @@ class Settings(BaseSettings):
         )
 
 
-settings = Settings()
+def get_settings() -> Settings:
+    return Settings(PROJECT_NAME="Direct4Ag", SERVER_NAME="Direct4Ag API")
