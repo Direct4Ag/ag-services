@@ -1,0 +1,34 @@
+from typing import TYPE_CHECKING
+
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+import uuid
+
+from app.db.base_class import Base
+
+if TYPE_CHECKING:
+    from app.models import Field
+
+
+class Research(Base):
+    """
+    The Research table contains the information about the research done on a field.
+    The way the table is structured, we can have multiple researches on a field, but it is not the case for now.
+    However, 2 same type of research can be done on different fields but the data will be different so we need to keep track of it
+    by allowing same name of research on different fields.
+
+    """
+
+    __tablename__ = "research"
+
+    id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    research_name: str = Column(String(200), nullable=False)
+    research_area: str = Column(String(200), nullable=False)
+    research_type: str = Column(String(200), nullable=False)
+
+    field_ref_id: str = Column(
+        UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False
+    )
+
+    field: "Field" = relationship("Field", back_populates="researches")
