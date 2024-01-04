@@ -31,12 +31,12 @@ def create_env_file() -> None:
 
     postgres_db = input("What is the postgres database name?\n")
     print()
-    
+
     postgres_port = input("What is the postgres port?\n")
     if not postgres_port.isdigit():
         raise ValueError("Postgres port must be a number.")
     else:
-        postgres_port = int(postgres_port)
+        postgres_port = int(postgres_port)  # type: ignore
     print()
 
     env_vars = {
