@@ -4,6 +4,7 @@ from typing import List
 import json
 
 from pydantic import BaseModel
+import uuid
 
 from app.schemas.field import FieldSummary
 
@@ -11,7 +12,7 @@ from app.schemas.field import FieldSummary
 class ResearchBase(BaseModel):
     """Base model for researches"""
 
-    id: str
+    id: uuid.UUID
     research_name: str
     research_area: str
     research_type: str
@@ -29,7 +30,7 @@ class ResearchSummary(ResearchSummaryInDB):
 
 
 class ResearchDetailBase(ResearchBase):
-    field_ref_id: str
+    field_ref_id: uuid.UUID
 
 
 class ResearchDetailInDB(ResearchDetailBase):

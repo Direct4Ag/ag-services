@@ -9,7 +9,7 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.get("/all", response_model=schemas.ResearchSummary)
+@router.get("/all", response_model=List[schemas.ResearchSummary])
 def read_research(
     db: Session = Depends(deps.get_db),
     skip: int = 0,

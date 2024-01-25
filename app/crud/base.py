@@ -25,9 +25,8 @@ ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
-class CRUDBase (
-    Generic[ModelType, CreateSchemaType, UpdateSchemaType]
-):
+
+class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
     def __init__(self, model: Type[ModelType]):
@@ -39,21 +38,21 @@ class CRUDBase (
             A SQLAlchemy model class
         """
         self.model = model
-    
+
     def order_by(self, query: Query, *, order_by: Optional[List[str]] = None) -> Query:
         """Order the query by the given list of columns.
 
-            Parameters
-            ----------
-            query : Query
-            order_by : Optional[List[str]]
-                List of column names to order by. If a column name is prefixed with '-',
-                order it in descending order.
-    
-            Returns
-            -------
-            Query
-                The ordered query.
+        Parameters
+        ----------
+        query : Query
+        order_by : Optional[List[str]]
+            List of column names to order by. If a column name is prefixed with '-',
+            order it in descending order.
+
+        Returns
+        -------
+        Query
+            The ordered query.
         """
         order_by_args = []
         if order_by:
@@ -64,17 +63,19 @@ class CRUDBase (
                 else:
                     column_name = column
                     order_func = asc
-                
+
                 for entity in query.column_descriptions:
                     if hasattr(entity["type"], column_name):
                         # TODO: test this for join queries where the models/entities
                         #       have columns with the same name.
                         #       The query probably fails or won't work, which means we
                         #       we have to construct column names differently.
-                        order_by_args.append(order_func(getattr(entity["type"], column_name)))
+                        order_by_args.append(
+                            order_func(getattr(entity["type"], column_name))
+                        )
                         break
         return query.order_by(*order_by_args)
-    
+
     def get(self, db: Session, id: str) -> Optional[ModelType]:
         """Get a database record by id.
 
@@ -122,7 +123,7 @@ class CRUDBase (
         query = self.order_by(db.query(self.model), order_by=order_by)
         data_from_db = query.offset(skip).limit(limit).all()
         return data_from_db
-    
+
     def get_all(
         self, db: Session, *, order_by: Optional[List[str]] = None
     ) -> List[ModelType]:
@@ -168,7 +169,7 @@ class CRUDBase (
         db.commit()
         db.refresh(db_obj)
         return db_obj
-    
+
     def update(
         self,
         db: Session,
@@ -205,7 +206,7 @@ class CRUDBase (
         db.commit()
         db.refresh(db_obj)
         return db_obj
-    
+
     def delete(self, db: Session, *, id: str) -> Optional[ModelType]:
         """Delete the database object for the given id.
 

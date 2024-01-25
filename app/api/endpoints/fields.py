@@ -9,7 +9,7 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.get("/all", response_model=schemas.FieldSummary)
+@router.get("/all", response_model=List[schemas.FieldSummary])
 def read_field(
     db: Session = Depends(deps.get_db),
     skip: int = 0,

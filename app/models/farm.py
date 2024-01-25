@@ -21,5 +21,5 @@ class Farm(Base):
     location_name: str = Column(String(200), nullable=False)
 
     fields: List["Field"] = relationship(
-        "Fields", back_populates="farm", cascade="all, delete"
+        "Field", back_populates="farm", cascade="all, delete"
     )

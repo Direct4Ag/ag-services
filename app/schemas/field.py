@@ -5,6 +5,7 @@ import json
 
 from pydantic import BaseModel, Field, validator
 from geoalchemy2 import WKBElement
+import uuid
 
 from app.schemas.farm import FarmSummary
 
@@ -12,16 +13,14 @@ from app.schemas.farm import FarmSummary
 class FieldBase(BaseModel):
     """Base model for fields"""
 
-    id: str
+    id: uuid.UUID
     field_name: str
-    location: List[List[float]] = Field(min_items=1)
+    field_shape: List[List[float]] = Field(min_items=1)
 
-    @validator("location", pre=True)
+    @validator("field_shape", pre=True)
     def to_list(cls, v: WKBElement) -> List[List[float]]:
         """Convert to list"""
-        print(type(v))
-        print(v)
-        return json.loads(v.data)["location"]
+        return json.loads(v.data)["coordinates"][0]
 
 
 class FieldSummaryInDB(FieldBase):
@@ -36,7 +35,7 @@ class FieldSummary(FieldSummaryInDB):
 
 
 class FieldDetailBase(FieldBase):
-    farm_ref_id: str
+    farm_ref_id: uuid.UUID
 
 
 class FieldDetailInDB(FieldDetailBase):

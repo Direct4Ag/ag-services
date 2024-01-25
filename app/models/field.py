@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING, List
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from geoalchemy2 import Geography
+from app.utils.db import Geometry
+from geoalchemy2 import WKBElement
 from sqlalchemy.orm import relationship
 import uuid
 
@@ -20,9 +22,11 @@ class Field(Base):
 
     __tablename__ = "fields"
 
-    id: str = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id: uuid.UUID = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     field_name: str = Column(String(150), nullable=False)
-    location: str = Column(Geography("POLYGON"), nullable=False)
+    field_shape: WKBElement = Column(
+        Geometry("POLYGON", srid=4326, spatial_index=True), nullable=False
+    )
 
     farm_ref_id: str = Column(
         UUID(as_uuid=True), ForeignKey("farms.id"), nullable=False

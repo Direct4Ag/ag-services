@@ -3,12 +3,13 @@
 from typing import List
 
 from pydantic import BaseModel
+import uuid
 
 
 class FarmBase(BaseModel):
     """Base model for farms"""
 
-    id: str
+    id: uuid.UUID
     farm_name: str
     location_name: str
 

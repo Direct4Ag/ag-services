@@ -9,7 +9,7 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.get("/all", response_model=schemas.FarmSummary)
+@router.get("/all", response_model=List[schemas.FarmSummary])
 def read_farm(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
