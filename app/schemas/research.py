@@ -6,7 +6,7 @@ import json
 from pydantic import BaseModel
 import uuid
 
-from app.schemas.field import FieldSummary
+from app.schemas.field import FieldDetails
 
 
 class ResearchBase(BaseModel):
@@ -34,8 +34,8 @@ class ResearchDetailBase(ResearchBase):
 
 
 class ResearchDetailInDB(ResearchDetailBase):
-    # field: FieldDetails
-    field: FieldSummary
+    field: FieldDetails
+    # field: FieldSummary
 
     class Config:
         orm_mode = True

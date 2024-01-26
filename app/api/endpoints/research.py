@@ -21,6 +21,18 @@ def read_research(
     return research
 
 
+@router.get("/research_details", response_model=List[schemas.ResearchDetails])
+def read_research_details(
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    order_by: Optional[List[str]] = Query(None),
+) -> Any:
+    """Retrieve research."""
+    research = crud.research.get_multi(db, skip=skip, limit=limit, order_by=order_by)
+    return research
+
+
 @router.get("/{research_id}", response_model=schemas.ResearchDetails)
 def read_research_by_id(
     research_id: str,

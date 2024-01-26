@@ -5,6 +5,7 @@ import json
 
 from pydantic import BaseModel, Field, validator
 from geoalchemy2 import WKBElement
+from shapely.geometry import shape
 import uuid
 
 from app.schemas.farm import FarmSummary
@@ -20,7 +21,11 @@ class FieldBase(BaseModel):
     @validator("field_shape", pre=True)
     def to_list(cls, v: WKBElement) -> List[List[float]]:
         """Convert to list"""
-        return json.loads(v.data)["coordinates"][0]
+        ret_val = json.loads(v.data)
+        coordinate_list = shape(ret_val)
+        print(coordinate_list)
+        print(type(coordinate_list))
+        return ret_val["coordinates"][0]
 
 
 class FieldSummaryInDB(FieldBase):
