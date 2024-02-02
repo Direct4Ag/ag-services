@@ -51,6 +51,7 @@ class Data:
             field_shapes: GeoDataFrame = gpd.read_file(
                 PROJECT_ROOT / "data" / "shapefiles" / farm["polygon"]
             )
+            field_shapes = field_shapes.to_crs(4326)
 
             ### Insert Fields
             for field in farm["fields"]:

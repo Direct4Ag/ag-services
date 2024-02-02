@@ -50,3 +50,6 @@ hs_err_pid*
 venv/
 .env
 
+# data folder
+data/
+

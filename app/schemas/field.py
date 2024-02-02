@@ -23,7 +23,7 @@ class FieldBase(BaseModel):
         """Convert to list"""
         ret_val = json.loads(v.data)
         coordinate_list = shape(ret_val)
-        print(coordinate_list)
+        print(ret_val)
         print(type(coordinate_list))
         return ret_val["coordinates"][0]
 
