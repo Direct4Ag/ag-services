@@ -3,6 +3,12 @@
 bin/
 /*/bin
 .cache/
+__pycache__/
+*.py[cod]
+
+.coverage
+htmlcov
+.mypy_cache
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -39,4 +45,11 @@ hs_err_pid*
 *.json
 !tests/data/*/*.json
 !tests/data/*.json
+
+# Environments
+venv/
+.env
+
+# data folder
+data/
 

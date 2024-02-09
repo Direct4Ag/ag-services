@@ -5,21 +5,32 @@ description = ""
 authors = ["Christopher Navarro <cmnavarr@illinois.edu>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-fastapi = "^0.73.0"
-uvicorn = "^0.17.6"
-gunicorn = "^20.1"
-alembic = "^1.7.7"
-psycopg2-binary = "^2.9.3"
-SQLAlchemy = {extras = ["mypy"], version = "~1.4"}
-passlib = {extras = ["bcrypt"], version = "~1.7"}
-pydantic = "^1.9.0"
-python-dotenv = ">=0.10.3"
+python = ">=3.10,<4"
+fastapi = "~0.88"
+uvicorn = "~0.20"
+GeoAlchemy2 = "~0.12"
+gunicorn = "~20.1"
+alembic = "~1.8"
+passlib = { extras = ["bcrypt"], version = "~1.7" }
+psycopg2-binary = "~2.9"
+SQLAlchemy = { extras = ["mypy"], version = "~1.4" }
+pydantic = { extras = ["dotenv"], version = "~1.10" }
+python-jose = { extras = ["cryptography"], version = "~3.3" }
 python-multipart = "~0.0.5"
+python-dateutil = "^2.8.2"
+geopandas = "^0.14.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.1"
+alembic-autogen-check = "^1.1.1"
+autoflake = "~2.0"
+black = { extras = ["d"], version = "~22.10" }
+flake8 = "~6.0"
+isort = "~5.13.2"
+mypy = "~0.991"
+pytest = "~7.2"
+pytest-cov = "~4.0"
+sqlalchemy2-stubs = "~0.0.2a25"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry>=1.1"]
+build-backend = "poetry.masonry.api"

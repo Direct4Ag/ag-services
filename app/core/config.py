@@ -1,27 +1,34 @@
 from pydantic import BaseSettings
 
 import os
+from functools import lru_cache
 from typing import Any, Dict, Optional, List, Union
-from pydantic import PostgresDsn, validator, AnyHttpUrl
+from pydantic import PostgresDsn, validator, Field, AnyHttpUrl
+
+from app import PROJECT_ROOT
 
 
 class Settings(BaseSettings):
+    """
+    API config
+
+    All attributes of this class can be set in the `.env` file in the project root,
+    unless they are set as a `const` fields.
+    """
+
+    PROJECT_NAME: str = Field("Direct4Ag", const=True)
+    SERVER_NAME: str = Field("Direct4Ag API", const=True)
+
     main_path: str = os.path.abspath(os.path.dirname(__file__))
     models_path: str = os.path.join(main_path, "../labels")
     routers_path: str = os.path.join(main_path, "../routers")
-
-    ROUTER_PREFIX: str
-    PROJECT_NAME: str
-    SERVER_NAME: str
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    POSTGRES_PORT: str
-
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
     
     SERVER_HOST: AnyHttpUrl
+
+    # Set DEBUG = False when in Production else can be set to True.
+    DEBUG: bool = False
+
+    API_STR: str = "/api"
 
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:3000"]'
@@ -34,6 +41,14 @@ class Settings(BaseSettings):
         elif isinstance(v, (list, str)):
             return v
         raise ValueError(v)
+    
+    POSTGRES_SERVER: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+    POSTGRES_TEST_DB: str = "test_direct4ag"
+    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    POSTGRES_PORT: str
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
@@ -49,6 +64,10 @@ class Settings(BaseSettings):
             path=f"/{db_name}",
         )
 
+    class Config:
+        env_file = PROJECT_ROOT / ".env"
+        case_sensitive = True
 
+@lru_cache()
 def get_settings() -> Settings:
-    return Settings(PROJECT_NAME="Direct4Ag", SERVER_NAME="Direct4Ag API")
+    return Settings()
