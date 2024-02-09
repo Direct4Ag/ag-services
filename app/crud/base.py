@@ -5,19 +5,14 @@ from typing import (
     List,
     Optional,
     Type,
-    TypedDict,
     TypeVar,
     Union,
-    cast,
 )
 
-from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from sqlalchemy import Column, Table, and_, asc, desc, func, or_
+from sqlalchemy import asc, desc
 from sqlalchemy.orm import Query, Session
-from sqlalchemy.sql.elements import BinaryExpression
-from sqlalchemy.sql.functions import _FunctionGenerator
 
 from app.db.base_class import Base
 

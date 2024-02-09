@@ -1,8 +1,5 @@
 """Pydantic models for representing fields"""
 
-from typing import List
-import json
-
 from pydantic import BaseModel
 import uuid
 

@@ -1,7 +1,5 @@
 """Pydantic models for representing farms"""
 
-from typing import List
-
 from pydantic import BaseModel
 import uuid
 
