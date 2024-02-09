@@ -18,8 +18,16 @@ def read_field(
 ) -> Any:
     """Retrieve fields."""
     fields = crud.field.get_multi(db, skip=skip, limit=limit, order_by=order_by)
-
     return fields
+
+
+@router.get("/geojson", response_model=schemas.FieldGeoJSON)
+def read_field_geojson(
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Retrieve fields."""
+    fields_jeojson = crud.field.get_field_geojson(db)
+    return fields_jeojson
 
 
 @router.get("/field_details", response_model=List[schemas.FieldDetails])

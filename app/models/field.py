@@ -27,6 +27,9 @@ class Field(Base):
     field_shape: WKBElement = Column(
         Geometry("POLYGON", srid=4326, spatial_index=True), nullable=False
     )
+    coordinates: WKBElement = Column(
+        Geometry("POINT", srid=4326, spatial_index=True), nullable=False
+    )
 
     farm_ref_id: str = Column(
         UUID(as_uuid=True), ForeignKey("farms.id"), nullable=False

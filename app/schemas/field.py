@@ -16,16 +16,12 @@ class FieldBase(BaseModel):
 
     id: uuid.UUID
     field_name: str
-    field_shape: List[List[float]] = Field(min_items=1)
+    coordinates: List[float] = Field(min_items=2, max_items=2)
 
-    @validator("field_shape", pre=True)
-    def to_list(cls, v: WKBElement) -> List[List[float]]:
-        """Convert to list"""
-        ret_val = json.loads(v.data)
-        coordinate_list = shape(ret_val)
-        print(ret_val)
-        print(type(coordinate_list))
-        return ret_val["coordinates"][0]
+    @validator("coordinates", pre=True)
+    def to_point(cls, value: WKBElement) -> List[float]:
+        """Convert the WKBElement received from SQLAlchemy to a list of long and lat."""
+        return json.loads(value.data)["coordinates"]
 
 
 class FieldSummaryInDB(FieldBase):
@@ -60,3 +56,14 @@ class FieldCreate(FieldDetailBase):
 
 class FieldUpdate(FieldDetailBase):
     pass
+
+
+class FieldGeoJSON(BaseModel):
+    """Model for fields in GeoJSON format"""
+
+    type: str = "FeatureCollection"
+    features: List[dict]
+
+    class Config:
+        orm_mode = True
+        arbitrary_types_allowed = True

@@ -51,7 +51,14 @@ class Data:
             field_shapes: GeoDataFrame = gpd.read_file(
                 PROJECT_ROOT / "data" / "shapefiles" / farm["polygon"]
             )
-            field_shapes = field_shapes.to_crs(4326)
+            # convert the coordinate reference system to EPSG 4326
+            if field_shapes.crs.to_epsg() != 4326:
+                field_shapes = field_shapes.to_crs(4326)
+                field_shapes["centroid"] = (
+                    gpd.GeoSeries.concave_hull(field_shapes)
+                    .to_crs("+proj=cea")
+                    .centroid.to_crs(4326)
+                )
 
             ### Insert Fields
             for field in farm["fields"]:
@@ -61,10 +68,16 @@ class Data:
                         "geometry"
                     ].values[0]
                 )
+                field_coordinate = str(
+                    field_shapes[field_shapes["name"] == field["fieldName"]][
+                        "centroid"
+                    ].values[0]
+                )
                 obj_in = {
                     "field_name": field["fieldName"],
                     "field_shape": field_shape,
                     "farm_ref_id": farm_in_db.id,
+                    "coordinates": field_coordinate,
                 }
 
                 field_in_db = crud.field.create(self.db, obj_in=obj_in)
