@@ -1,7 +1,7 @@
 from typing import Awaitable, Callable
 
 import pydantic
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
@@ -33,6 +33,7 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
         expose_headers=["Content-Disposition"],
     )
+
 
 async def catch_exceptions_middleware(
     request: Request, call_next: Callable[[Request], Awaitable[Response]]

@@ -1,16 +1,14 @@
 import json
 import logging
 
-from typing import Dict, List
 import geopandas as gpd
 from geopandas.geodataframe import GeoDataFrame
-from geoalchemy2.shape import from_shape
-from shapely import to_geojson
 
-from app import PROJECT_ROOT, crud, models, schemas
+from app import PROJECT_ROOT, crud
 from app.core.config import get_settings
 from app.db import base  # noqa: F401
 from app.db.session import SessionLocal
+from sqlalchemy import text
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Data Import")
@@ -24,15 +22,14 @@ class Data:
 
         farm_data_path = PROJECT_ROOT / "data" / "data.json"
 
-        shapefiles_folder_path = PROJECT_ROOT / "data" / "shapefiles"
-
         with open(farm_data_path) as f:
             self.data = json.load(f)["dataArray"]
 
     def insert_data(self) -> None:
         ### truncate all tables
         logger.info("Truncating all tables")
-        self.db.execute("TRUNCATE TABLE farms RESTART IDENTITY CASCADE;")
+        truncate_query = text("TRUNCATE TABLE farms RESTART IDENTITY CASCADE;")
+        self.db.execute(truncate_query)
 
         for farm in self.data:
             logger.info(f"Importing farm: {farm['name']}")
