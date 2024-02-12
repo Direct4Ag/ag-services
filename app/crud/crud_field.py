@@ -34,7 +34,7 @@ class CRUDField(CRUDBase[Field, FieldCreate, FieldUpdate]):
                     "geometry": json.loads(row.shape_jeojson),
                     "properties": {
                         "id": str(row.id),
-                        "name": row.field_name
+                        "name": row.field_name,
                         # Add more properties as needed
                     },
                 }
