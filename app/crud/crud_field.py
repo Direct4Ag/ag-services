@@ -37,8 +37,9 @@ class CRUDField(CRUDBase[Field, FieldCreate, FieldUpdate]):
                         "name": row.field_name,
                         # Add more properties as needed
                     },
+                    "id": i + 1,
                 }
-                for row in query
+                for i, row in enumerate(query)
             ],
         }
 
