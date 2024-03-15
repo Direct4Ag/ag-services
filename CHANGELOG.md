@@ -1,4 +1,5 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -7,5 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+
 - Add basic APIs for CRUD operations [#15](https://github.com/Direct4Ag/ag-services/issues/15)
 - Add geojson endpoint and fonts for maplibre [#23](https://github.com/Direct4Ag/ag-services/issues/23)
+
+### Fixed
+
+- Added more localhost strings to avoid unseen CORS error [#26](https://github.com/Direct4Ag/ag-services/issues/26)
