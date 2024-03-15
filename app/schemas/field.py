@@ -6,7 +6,6 @@ from typing import List
 
 from geoalchemy2 import WKBElement
 from pydantic import BaseModel, Field, validator
-from shapely.geometry import shape
 
 from app.schemas.farm import FarmSummary
 

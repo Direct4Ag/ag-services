@@ -1,7 +1,7 @@
 """new
 
 Revision ID: 0906792b574b
-Revises: 
+Revises:
 Create Date: 2024-01-03 19:42:50.497559+00:00
 
 """

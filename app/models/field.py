@@ -1,7 +1,7 @@
 import uuid
 from typing import TYPE_CHECKING, List
 
-from geoalchemy2 import Geography, WKBElement
+from geoalchemy2 import WKBElement
 from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
