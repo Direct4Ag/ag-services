@@ -3,12 +3,12 @@ import logging
 
 import geopandas as gpd
 from geopandas.geodataframe import GeoDataFrame
+from sqlalchemy import text
 
 from app import PROJECT_ROOT, crud
 from app.core.config import get_settings
 from app.db import base  # noqa: F401
 from app.db.session import SessionLocal
-from sqlalchemy import text
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Data Import")

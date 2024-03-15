@@ -6,8 +6,9 @@ Create Date: 2024-02-09 15:12:56.494769+00:00
 
 """
 
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 from app.utils.db import Geometry
 
 # revision identifiers, used by Alembic.

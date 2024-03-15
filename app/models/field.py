@@ -1,20 +1,18 @@
+import uuid
 from typing import TYPE_CHECKING, List
 
-from sqlalchemy import Column, String, ForeignKey
+from geoalchemy2 import Geography, WKBElement
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
-from geoalchemy2 import Geography
-from app.utils.db import Geometry
-from geoalchemy2 import WKBElement
 from sqlalchemy.orm import relationship
-import uuid
 
 from app.db.base_class import Base
+from app.utils.db import Geometry
 
 # from app.utils.db import Geometry # modify this to geography if required else remove this line
 
 if TYPE_CHECKING:
-    from app.models import Farm
-    from app.models import Research
+    from app.models import Farm, Research
 
 
 class Field(Base):

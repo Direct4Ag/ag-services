@@ -8,8 +8,8 @@ from starlette.requests import Request
 from starlette.responses import Response
 
 from app import PROJECT_ROOT
-from app.core.config import get_settings
 from app.api.router import api_router
+from app.core.config import get_settings
 from app.utils.logger import logger
 
 settings = (
