@@ -54,7 +54,7 @@ jobs:
           POETRY_VIRTUALENVS_CREATE: false
 
       - name: Run Unit Testing
-        run: pytest app/tests
+        run: bash ./scripts/run_tests.sh
         env:
           PGHOST: ${{ env.POSTGRES_SERVER }}
           PGPORT: ${{ env.POSTGRES_PORT }}
@@ -62,7 +62,4 @@ jobs:
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
           # Environment variables required by FastAPI
           SERVER_HOST: http://localhost
-          ROUTER_PREFIX: /direct4ag
-          POSTGRES_DB: test_direct4ag
-          FIRST_SUPERUSER: admin@example.com
-          FIRST_SUPERUSER_PASSWORD: secret_password
+          POSTGRES_TEST_DB: test_direct4ag
