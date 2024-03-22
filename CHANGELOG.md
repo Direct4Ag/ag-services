@@ -9,3 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add basic APIs for CRUD operations [#15](https://github.com/Direct4Ag/ag-services/issues/15)
 - Add geojson endpoint and fonts for maplibre [#23](https://github.com/Direct4Ag/ag-services/issues/23)
+
+### Fixed
+
+- Fix CORS error due to imperfect allowed backend urls [#26](https://github.com/Direct4Ag/ag-services/issues/26)
