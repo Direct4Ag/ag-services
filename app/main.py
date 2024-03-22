@@ -3,9 +3,11 @@ from typing import Awaitable, Callable
 import pydantic
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 from starlette.responses import Response
 
+from app import PROJECT_ROOT
 from app.core.config import get_settings
 from app.api.router import api_router
 from app.utils.logger import logger
@@ -19,6 +21,12 @@ app = FastAPI(
     openapi_url=f"{settings.API_STR}/openapi.json",
     docs_url=f"{settings.API_STR}/docs",
     redoc_url=None,
+)
+
+app.mount(
+    "/fonts",
+    StaticFiles(directory=PROJECT_ROOT / "glyphs"),
+    name="glyphs",
 )
 
 allowed_origins = [str(origin) for origin in settings.BACKEND_CORS_ORIGINS]
