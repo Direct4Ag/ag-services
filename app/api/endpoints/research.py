@@ -47,7 +47,7 @@ def read_research_by_id(
     return research
 
 
-@router.get("/researchby/", response_model=schemas.ResearchSummary)
+@router.get("/researchby/", response_model=Optional[List[schemas.ResearchSummary]])
 def read_research_by(
     research_area: Optional[str] = None,
     research_type: Optional[str] = None,

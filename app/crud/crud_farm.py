@@ -2,9 +2,9 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
+import app.schemas as schemas
 from app.crud.base import CRUDBase
 from app.models import Farm, Field
-import app.schemas as schemas
 
 
 class CRUDDataSource(CRUDBase[Farm, schemas.FarmCreate, schemas.FarmUpdate]):

@@ -1,12 +1,11 @@
 """Pydantic models for representing fields"""
 
-from typing import List
 import json
-
-from pydantic import BaseModel, Field, validator
-from geoalchemy2 import WKBElement
-from shapely.geometry import shape
 import uuid
+from typing import List
+
+from geoalchemy2 import WKBElement
+from pydantic import BaseModel, Field, validator
 
 from app.schemas.farm import FarmSummary
 

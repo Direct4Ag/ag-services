@@ -19,6 +19,7 @@ python-jose = { extras = ["cryptography"], version = "~3.3" }
 python-multipart = "~0.0.5"
 python-dateutil = "^2.8.2"
 geopandas = "^0.14.2"
+httpx = "^0.27.0"
 
 [tool.poetry.dev-dependencies]
 alembic-autogen-check = "^1.1.1"
