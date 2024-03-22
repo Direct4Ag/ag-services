@@ -1,12 +1,11 @@
+import json
 from typing import List
 
-from sqlalchemy.orm import Session
-import json
 from geoalchemy2.functions import ST_AsGeoJSON
+from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
 from app.models import Field, Research
-
 from app.schemas import FieldCreate, FieldUpdate
 
 

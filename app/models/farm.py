@@ -1,9 +1,9 @@
+import uuid
 from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-import uuid
 
 from app.db.base_class import Base
 

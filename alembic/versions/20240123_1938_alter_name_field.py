@@ -5,11 +5,11 @@ Revises: af0d80534e45
 Create Date: 2024-01-23 19:38:13.608262+00:00
 
 """
-from alembic import op
-import sqlalchemy as sa
 import geoalchemy2
-from app.utils.db import Geometry
+import sqlalchemy as sa
 
+from alembic import op
+from app.utils.db import Geometry
 
 # revision identifiers, used by Alembic.
 revision = "de7b885ec7b4"

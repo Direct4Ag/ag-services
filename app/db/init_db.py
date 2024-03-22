@@ -3,12 +3,12 @@ import logging
 
 import geopandas as gpd
 from geopandas.geodataframe import GeoDataFrame
+from sqlalchemy import text
 
 from app import PROJECT_ROOT, crud
 from app.core.config import get_settings
 from app.db import base  # noqa: F401
 from app.db.session import SessionLocal
-from sqlalchemy import text
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Data Import")
@@ -26,7 +26,7 @@ class Data:
             self.data = json.load(f)["dataArray"]
 
     def insert_data(self) -> None:
-        ### truncate all tables
+        # truncate all tables
         logger.info("Truncating all tables")
         truncate_query = text("TRUNCATE TABLE farms RESTART IDENTITY CASCADE;")
         self.db.execute(truncate_query)
@@ -34,7 +34,7 @@ class Data:
         for farm in self.data:
             logger.info(f"Importing farm: {farm['name']}")
 
-            ### Insert Farm
+            # Insert Farm
             obj_in = {
                 "farm_name": farm["name"],
                 "location_name": farm["location"],
@@ -44,7 +44,7 @@ class Data:
             # )  # might cause issue since no ID is provided
             farm_in_db = crud.farm.create(self.db, obj_in=obj_in)
 
-            ### extract polygon data
+            # extract polygon data
             field_shapes: GeoDataFrame = gpd.read_file(
                 PROJECT_ROOT / "data" / "shapefiles" / farm["polygon"]
             )
@@ -57,7 +57,7 @@ class Data:
                     .centroid.to_crs(4326)
                 )
 
-            ### Insert Fields
+            # Insert Fields
             for field in farm["fields"]:
                 logger.info(f"Importing field: {field['fieldName']}")
                 field_shape = str(
@@ -79,7 +79,7 @@ class Data:
 
                 field_in_db = crud.field.create(self.db, obj_in=obj_in)
 
-                ### Insert Researches
+                # Insert Researches
                 logger.info(
                     f"Importing research {field['researchName']} for field: {field['fieldName']}"
                 )

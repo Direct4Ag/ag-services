@@ -1,6 +1,6 @@
 # Digital Infrastructure for Research and Extension on Crops and Technology for Agriculture (DIRECT4AG)
 
-This is the service API for the Direct4Ag frontend. 
+This is the service API for the Direct4Ag frontend.
 
 ## Set up
 
@@ -50,4 +50,3 @@ docker run -p 8000:8000 --network host --env-file direct4ag-env direct4ag/servic
 On Mac and other platforms, use:
 
 docker run -p 8000:8000 --env-file direct4ag-env direct4ag/service:latest
-

@@ -1,7 +1,8 @@
 """Pydantic models for representing fields"""
 
-from pydantic import BaseModel
 import uuid
+
+from pydantic import BaseModel
 
 from app.schemas.field import FieldDetails
 

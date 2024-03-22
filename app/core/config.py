@@ -1,9 +1,8 @@
-from pydantic import BaseSettings
-
 import os
 from functools import lru_cache
-from typing import Any, Dict, Optional, List, Union
-from pydantic import PostgresDsn, validator, Field, AnyHttpUrl
+from typing import Any, Dict, List, Optional, Union
+
+from pydantic import AnyHttpUrl, BaseSettings, Field, PostgresDsn, validator
 
 from app import PROJECT_ROOT
 
@@ -22,7 +21,7 @@ class Settings(BaseSettings):
     main_path: str = os.path.abspath(os.path.dirname(__file__))
     models_path: str = os.path.join(main_path, "../labels")
     routers_path: str = os.path.join(main_path, "../routers")
-    
+
     SERVER_HOST: AnyHttpUrl
 
     # Set DEBUG = False when in Production else can be set to True.
@@ -41,7 +40,7 @@ class Settings(BaseSettings):
         elif isinstance(v, (list, str)):
             return v
         raise ValueError(v)
-    
+
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -67,6 +66,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = PROJECT_ROOT / ".env"
         case_sensitive = True
+
 
 @lru_cache()
 def get_settings() -> Settings:
