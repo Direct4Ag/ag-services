@@ -63,3 +63,4 @@ jobs:
           # Environment variables required by FastAPI
           SERVER_HOST: http://localhost
           POSTGRES_TEST_DB: test_direct4ag
+          POSTGRES_DB: direct4ag
