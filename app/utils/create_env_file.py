@@ -56,7 +56,7 @@ def create_env_file() -> None:
         f.write(env_vars_str)
 
     print(
-        f"\n\nSuccessfully created .env file in {env_file_path} with the following content:\n"
+        f"\n\nSuccessfully created .env file in {env_file_path} with the following content: \n"
     )
     print(env_vars_str)
 

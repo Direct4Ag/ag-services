@@ -39,10 +39,10 @@ jobs:
               BRANCH=${GITHUB_REF##*/}
             fi
           fi
-          
+
           echo "GITHUB_BRANCH=${BRANCH}" >> $GITHUB_ENV
           version=$(awk -F= '/^version/ { print $2}' pyproject.toml | sed 's/[ "]//g')
-          
+
           if [ "$BRANCH" == "main" ]; then
             tags="latest"
             oldversion=""
@@ -63,7 +63,7 @@ jobs:
             echo "VERSION=testing" >> $GITHUB_ENV
             STRIPPED_TAGS=${BRANCH/\#/_}
             echo "TAGS=${STRIPPED_TAGS}" >> $GITHUB_ENV
-          fi 
+          fi
 
       # Build image
       - name: Build docker image
