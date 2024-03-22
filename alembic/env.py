@@ -1,6 +1,7 @@
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
+from geoalchemy2 import alembic_helpers
 
 from alembic import context
 from app.core.config import get_settings
@@ -58,6 +59,9 @@ def run_migrations_offline():
         literal_binds=True,
         compare_type=True,
         include_name=include_name,
+        include_object=alembic_helpers.include_object,
+        process_revision_directives=alembic_helpers.writer,
+        render_item=alembic_helpers.render_item,
     )
 
     with context.begin_transaction():
@@ -85,6 +89,9 @@ def run_migrations_online():
             target_metadata=target_metadata,
             compare_type=True,
             include_name=include_name,
+            include_object=alembic_helpers.include_object,
+            process_revision_directives=alembic_helpers.writer,
+            render_item=alembic_helpers.render_item,
         )
 
         with context.begin_transaction():
