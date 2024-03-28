@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add geojson endpoint and fonts for maplibre [#23](https://github.com/Direct4Ag/ag-services/issues/23)
 - Add pytests for endpoints and crud operations [#25](https://github.com/Direct4Ag/ag-services/issues/25)
 - Add Pre-Commit hooks and linting changes [#22](https://github.com/Direct4Ag/ag-services/issues/22)
+- Add Geostreams sensors to field mapping table and api endpoint to get sensors for a field [#30](https://github.com/Direct4Ag/ag-services/issues/30)
 
 ### Fixed
 
