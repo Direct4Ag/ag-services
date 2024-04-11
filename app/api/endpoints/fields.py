@@ -62,3 +62,13 @@ def read_field_research(
     """Get all the research for the given field id."""
     research = crud.field.get_research(db, id=field_id)
     return research
+
+
+@router.get("/{field_id}/sensors", response_model=List[schemas.SensorSummary])
+def read_field_sensors(
+    field_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Get all the sensors for the given field id."""
+    sensors = crud.field.get_sensors(db, id=field_id)
+    return sensors

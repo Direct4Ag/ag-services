@@ -51,11 +51,12 @@ class Data:
             # convert the coordinate reference system to EPSG 4326
             if field_shapes.crs.to_epsg() != 4326:
                 field_shapes = field_shapes.to_crs(4326)
-                field_shapes["centroid"] = (
-                    gpd.GeoSeries.concave_hull(field_shapes)
-                    .to_crs("+proj=cea")
-                    .centroid.to_crs(4326)
-                )
+
+            field_shapes["centroid"] = (
+                gpd.GeoSeries.concave_hull(field_shapes)
+                .to_crs("+proj=cea")
+                .centroid.to_crs(4326)
+            )
 
             # Insert Fields
             for field in farm["fields"]:
@@ -92,6 +93,19 @@ class Data:
                 }
 
                 crud.research.create(self.db, obj_in=obj_in)
+
+                # Insert Sensors
+                for sensor in field["sensors"]:
+                    logger.info(
+                        f"Importing sensor {sensor['sensorId']} for field: {field['fieldName']}"
+                    )
+                    obj_in = {
+                        "depth": sensor["depth"],
+                        "sensor_id": sensor["sensorId"],
+                        "field_ref_id": field_in_db.id,
+                    }
+
+                    crud.sensor.create(self.db, obj_in=obj_in)
 
 
 if __name__ == "__main__":
