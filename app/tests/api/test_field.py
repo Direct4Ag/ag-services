@@ -61,7 +61,7 @@ def test_read_field_research_by_id(client: TestClient, skip: int, db: Session) -
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize("skip", [7])
+@pytest.mark.parametrize("skip", [3])
 def test_read_field_sensors_by_id(client: TestClient, skip: int, db: Session) -> None:
     fields = crud.field.get_multi(db, skip=skip, limit=1)
     field_id = None
