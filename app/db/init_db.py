@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 
@@ -14,6 +15,30 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Data Import")
 
 settings = get_settings()
+
+
+def parse_date(date_string):
+    """
+    Converts a date string in 'MM/DD/YY' format to a datetime.date object.
+
+    Args:
+    date_string (str): The date string to parse, expected in 'MM/DD/YY' format.
+
+    Returns:
+    datetime.date: A date object representing the parsed date.
+
+    Raises:
+    ValueError: If the date_string is not in the expected format or is invalid.
+    """
+    # Parse the date string using strptime with the appropriate format
+    try:
+        date_object = datetime.datetime.strptime(date_string, "%m/%d/%y").date()
+        return date_object
+    except ValueError as e:
+        # Raise an error with a more descriptive message
+        raise ValueError(
+            f"Invalid date or format: {date_string}. Expected format is MM/DD/YY."
+        ) from e
 
 
 class Data:
@@ -92,7 +117,22 @@ class Data:
                     "field_ref_id": field_in_db.id,
                 }
 
-                crud.research.create(self.db, obj_in=obj_in)
+                research = crud.research.create(self.db, obj_in=obj_in)
+
+                # Insert Drought Resistant Seed Data if available
+                if len(field["drs_yield_data"]) != 0:
+                    logger.info(
+                        f"Importing DRS Yield Data for research: {field['researchName']}"
+                    )
+                    for drs_yield in field["drs_yield_data"]:
+                        obj_in = {
+                            "replicate": drs_yield["replicate"],
+                            "line": drs_yield["line"],
+                            "planting_date": parse_date(drs_yield["planting_date"]),
+                            "harvest_date": parse_date(drs_yield["harvest_date"]),
+                            "yield_amount": drs_yield["yield_amount"],
+                            "research_ref_id": research.id,
+                        }
 
                 # Insert Sensors
                 for sensor in field["sensors"]:
