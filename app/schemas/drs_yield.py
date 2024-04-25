@@ -1,6 +1,7 @@
 """Pydantic models for representing Drought Resistant Seed Yield"""
 
 import uuid
+from datetime import date
 
 from pydantic import BaseModel
 
@@ -13,8 +14,8 @@ class DRSYieldBase(BaseModel):
     id: uuid.UUID
     replicate: int
     line: str
-    planting_date: str
-    harvest_date: str
+    planting_date: date
+    harvest_date: date
     yield_amount: float
 
 

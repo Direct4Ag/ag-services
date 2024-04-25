@@ -126,7 +126,7 @@ class Data:
                 research = crud.research.create(self.db, obj_in=obj_in)
 
                 # Insert Drought Resistant Seed Data if available
-                if len(field["drs_yield_data"]) != 0:
+                if len(field["drs_yield_data"]) > 0:
                     logger.info(
                         f"Importing DRS Yield Data for research: {field['researchName']}"
                     )
@@ -139,6 +139,7 @@ class Data:
                             "yield_amount": drs_yield["yield_amount"],
                             "research_ref_id": research.id,
                         }
+                        crud.drs_yield.create(self.db, obj_in=obj_in)
 
                 # Insert Sensors
                 for sensor in field["sensors"]:
