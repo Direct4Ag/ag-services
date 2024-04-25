@@ -42,7 +42,7 @@ hs_err_pid*
 # possible output file
 *.csv
 # a pair of negation pattern; everything else except below will be ignored by git
-*.json
+# *.json
 !tests/data/*/*.json
 !tests/data/*.json
 
