@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add basic APIs for CRUD operations [#15](https://github.com/Direct4Ag/ag-services/issues/15)
-- Add geojson endpoint and fonts for maplibre [#23](https://github.com/Direct4Ag/ag-services/issues/23)
-- Add pytests for endpoints and crud operations [#25](https://github.com/Direct4Ag/ag-services/issues/25)
-- Add Pre-Commit hooks and linting changes [#22](https://github.com/Direct4Ag/ag-services/issues/22)
-- Add Geostreams sensors to field mapping table and api endpoint to get sensors for a field [#30](https://github.com/Direct4Ag/ag-services/issues/30)
+- Basic APIs for CRUD operations [#15](https://github.com/Direct4Ag/ag-services/issues/15)
+- Geojson endpoint and fonts for maplibre [#23](https://github.com/Direct4Ag/ag-services/issues/23)
+- Pytests for endpoints and crud operations [#25](https://github.com/Direct4Ag/ag-services/issues/25)
+- Pre-Commit hooks and linting changes [#22](https://github.com/Direct4Ag/ag-services/issues/22)
+- Geostreams sensors to field mapping table and api endpoint to get sensors for a field [#30](https://github.com/Direct4Ag/ag-services/issues/30)
+- test_data folder to mock data for actions [#35](https://github.com/Direct4Ag/ag-services/issues/35)
 
 ### Fixed
 

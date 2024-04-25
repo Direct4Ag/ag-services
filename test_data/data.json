@@ -1,0 +1,96 @@
+{
+    "dataArray": [
+        {
+            "name": "Farm A",
+            "location": "Champaign County, IL",
+            "polygon": "farm_a/farm_a.shp",
+            "fields": [
+                {
+                    "fieldName": "01",
+                    "researchName": "01 Research",
+                    "researchArea": "Nitrogen Conservation",
+                    "researchType": "Cover Crop",
+                    "sensors": [
+                        {
+                            "sensorId": 1,
+                            "depth": "5cm"
+                        },
+                        {
+                            "sensorId": 2,
+                            "depth": "15cm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Farm B",
+            "location": "Champaign County, IL",
+            "polygon": "farm_b/farm_b.shp",
+            "fields": [
+                {
+                    "fieldName": "02",
+                    "researchName": "02 Research",
+                    "researchArea": "Water Resource Management",
+                    "researchType": "Drought-resistant Seeds",
+                    "sensors": [
+                        {
+                            "sensorId": 3,
+                            "depth": "30cm"
+                        },
+                        {
+                            "sensorId": 4,
+                            "depth": "50cm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Farm C",
+            "location": "Champaign County, IL",
+            "polygon": "farm_c/farm_c.shp",
+            "fields": [
+                {
+                    "fieldName": "03",
+                    "researchName": "03 Research",
+                    "researchArea": "Nitrogen Conservation",
+                    "researchType": "Crop Rotation",
+                    "sensors": [
+                        {
+                            "sensorId": 5,
+                            "depth": "30cm"
+                        },
+                        {
+                            "sensorId": 6,
+                            "depth": "50cm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Farm D",
+            "location": "Champaign County, IL",
+            "polygon": "farm_d/farm_d.shp",
+            "fields": [
+                {
+                    "fieldName": "04",
+                    "researchName": "04 Research",
+                    "researchArea": "Water Resource Management",
+                    "researchType": "Irrigation Strategies",
+                    "sensors": [
+                        {
+                            "sensorId": 7,
+                            "depth": "30cm"
+                        },
+                        {
+                            "sensorId": 9,
+                            "depth": "50cm"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

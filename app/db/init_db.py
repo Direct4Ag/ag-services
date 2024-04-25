@@ -1,3 +1,4 @@
+import argparse
 import json
 import logging
 
@@ -15,12 +16,17 @@ logger = logging.getLogger("Data Import")
 
 settings = get_settings()
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--testing", action="store_true")
+args = parser.parse_args()
+
 
 class Data:
-    def __init__(self) -> None:
+    def __init__(self, test_mode: bool) -> None:
         self.db = SessionLocal()
 
-        farm_data_path = PROJECT_ROOT / "data" / "data.json"
+        self.data_path = PROJECT_ROOT / ("data" if not test_mode else "test_data")
+        farm_data_path = self.data_path / "data.json"
 
         with open(farm_data_path) as f:
             self.data = json.load(f)["dataArray"]
@@ -46,7 +52,7 @@ class Data:
 
             # extract polygon data
             field_shapes: GeoDataFrame = gpd.read_file(
-                PROJECT_ROOT / "data" / "shapefiles" / farm["polygon"]
+                self.data_path / "shapefiles" / farm["polygon"]
             )
             # convert the coordinate reference system to EPSG 4326
             if field_shapes.crs.to_epsg() != 4326:
@@ -110,6 +116,6 @@ class Data:
 
 if __name__ == "__main__":
     logger.info("Creating initial data")
-    data = Data()
+    data = Data(test_mode=args.testing)
     data.insert_data()
     logger.info("Initial data created")
