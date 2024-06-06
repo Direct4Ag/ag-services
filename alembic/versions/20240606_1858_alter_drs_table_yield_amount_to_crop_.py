@@ -1,10 +1,11 @@
-"""alter drs table yeild_amount to crop_yield
+"""alter drs table yield_amount to crop_yield
 
 Revision ID: 8f0ee7dad192
 Revises: 11252b877df4
 Create Date: 2024-06-06 18:58:20.587152+00:00
 
 """
+
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
