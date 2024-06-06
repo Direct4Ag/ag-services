@@ -22,7 +22,7 @@ class DroughtResistantSeedYield(Base):
     line: str = Column(String(200), nullable=False)
     planting_date: date = Column(Date, nullable=False)  # noqa: F811
     harvest_date: date = Column(Date, nullable=False)  # noqa: F811
-    yield_amount: float = Column(Float, nullable=False)
+    crop_yield: float = Column(Float, nullable=True)
 
     research_ref_id: str = Column(
         UUID(as_uuid=True), ForeignKey("research.id"), nullable=False

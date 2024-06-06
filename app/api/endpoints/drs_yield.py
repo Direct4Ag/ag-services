@@ -21,7 +21,7 @@ def read_drs_yield(
     return drs_yield
 
 
-@router.get("/drs_yield_details", response_model=List[schemas.DRSYieldDetails])
+@router.get("/yield_details", response_model=List[schemas.DRSYieldDetails])
 def read_drs_yield_details(
     db: Session = Depends(deps.get_db),
     skip: int = 0,

@@ -16,7 +16,7 @@ class DRSYieldBase(BaseModel):
     line: str
     planting_date: date
     harvest_date: date
-    yield_amount: float
+    crop_yield: float
 
 
 class DRSYieldSummaryInDB(DRSYieldBase):

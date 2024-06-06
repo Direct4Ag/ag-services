@@ -50,14 +50,14 @@
                             "line": "R1151AM",
                             "planting_date": "05/16/22",
                             "harvest_date": "10/27/22",
-                            "yield_amount": 239.3907
+                            "crop_yield": 239.3907
                         },
                         {
                             "replicate": 1,
                             "line": "P1331AM",
                             "planting_date": "05/16/22",
                             "harvest_date": "10/27/22",
-                            "yield_amount": 240.2234
+                            "crop_yield": 240.2234
                         }
                     ]
                 }

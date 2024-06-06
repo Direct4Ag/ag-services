@@ -136,7 +136,7 @@ class Data:
                             "line": drs_yield["line"],
                             "planting_date": parse_date(drs_yield["planting_date"]),
                             "harvest_date": parse_date(drs_yield["harvest_date"]),
-                            "yield_amount": drs_yield["yield_amount"],
+                            "crop_yield": drs_yield["crop_yield"],
                             "research_ref_id": research.id,
                         }
                         crud.drs_yield.create(self.db, obj_in=obj_in)

@@ -12,5 +12,7 @@ api_router.include_router(farms_router, prefix="/farms", tags=["farms"])
 api_router.include_router(fields_router, prefix="/fields", tags=["fields"])
 api_router.include_router(research_router, prefix="/research", tags=["research"])
 api_router.include_router(
-    drs_yield_router, prefix="/drs", tags=["drought_resistant_seed_yield"]
+    drs_yield_router,
+    prefix="/drought-resistant-seeds",
+    tags=["drought_resistant_seed_yield"],
 )
