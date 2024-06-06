@@ -1,10 +1,11 @@
-"""add drs yeild table
+"""add drs yield table
 
 Revision ID: 11252b877df4
 Revises: d1d18f24e794
 Create Date: 2024-04-25 18:33:22.716935+00:00
 
 """
+
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
