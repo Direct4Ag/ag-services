@@ -19,7 +19,8 @@
                             "sensorId": 2,
                             "depth": "15cm"
                         }
-                    ]
+                    ],
+                    "drs_yield_data": []
                 }
             ]
         },
@@ -41,6 +42,22 @@
                         {
                             "sensorId": 4,
                             "depth": "50cm"
+                        }
+                    ],
+                    "drs_yield_data": [
+                        {
+                            "replicate": 1,
+                            "line": "R1151AM",
+                            "planting_date": "05/16/22",
+                            "harvest_date": "10/27/22",
+                            "crop_yield": 239.3907
+                        },
+                        {
+                            "replicate": 1,
+                            "line": "P1331AM",
+                            "planting_date": "05/16/22",
+                            "harvest_date": "10/27/22",
+                            "crop_yield": 240.2234
                         }
                     ]
                 }
@@ -65,7 +82,8 @@
                             "sensorId": 6,
                             "depth": "50cm"
                         }
-                    ]
+                    ],
+                    "drs_yield_data": []
                 }
             ]
         },
@@ -88,7 +106,8 @@
                             "sensorId": 9,
                             "depth": "50cm"
                         }
-                    ]
+                    ],
+                    "drs_yield_data": []
                 }
             ]
         }

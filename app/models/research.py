@@ -1,5 +1,5 @@
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
 if TYPE_CHECKING:
-    from app.models import Field
+    from app.models import DroughtResistantSeedYield, Field
 
 
 class Research(Base):
@@ -32,3 +32,7 @@ class Research(Base):
     )
 
     field: "Field" = relationship("Field", back_populates="researches")
+
+    drought_resistant_seed_yield: List["DroughtResistantSeedYield"] = relationship(
+        "DroughtResistantSeedYield", back_populates="research"
+    )
