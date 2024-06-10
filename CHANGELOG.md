@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Geostreams sensors to field mapping table and api endpoint to get sensors for a field [#30](https://github.com/Direct4Ag/ag-services/issues/30)
 - test_data folder to mock data for actions [#35](https://github.com/Direct4Ag/ag-services/issues/35)
 - Endpoints for Drought Resistant Seed Yield data [#37](https://github.com/Direct4Ag/ag-services/issues/37)
+- Altered sensor table to hold type field and add geostreams data fetching endpoints [#39](https://github.com/Direct4Ag/ag-services/issues/39)
 
 ### Fixed
 

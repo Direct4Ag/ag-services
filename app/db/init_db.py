@@ -149,6 +149,7 @@ class Data:
                     obj_in = {
                         "depth": sensor["depth"],
                         "sensor_id": sensor["sensorId"],
+                        "sensor_type": sensor["sensorType"],
                         "field_ref_id": field_in_db.id,
                     }
 
