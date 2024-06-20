@@ -1,12 +1,44 @@
+from collections import defaultdict
 from typing import Any, List, Optional
 
+import numpy as np
+import requests
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app import crud, schemas
 from app.api import deps
+from app.core.config import get_settings
 
 router = APIRouter()
+settings = get_settings()
+
+
+def get_vpd(T, RH, elevation=0):
+    T_kelv = T + +273.16
+    e_st = 1013.246
+
+    p_h = (
+        e_st * (1 - (0.0065 * elevation) / 288.15) ** 5.255
+    )  # calculate mean atmospheric air pressure at given elevation
+
+    A = -0.58002206 * 10**4 / T_kelv
+    B = 0.13914993 * 10**1
+    C = -0.48640239 * 10 ** (-1) * T_kelv
+    D = 0.41764768 * 10 ** (-4) * T_kelv**2
+    E = -0.14452093 * 10 ** (-7) * T_kelv**3
+    F = 0.65459673 * 10**1 * np.log(T_kelv)
+    # log_e_sat = -0.58002206 * 10**4 / T_kelv + 0.13914993 * 10**1 - 0.48640239 * 10**(-1) * T_kelv + 0.41764768 * 10**(-4) * T_kelv**2 - 0.14452093 * 10**(-7) * T_kelv**3 + 0.65459673 * 10**1 * np.log10(T_kelv)
+    e_sat = np.exp(A + B + C + D + E + F) / 100
+
+    e_air = e_sat * RH / 100
+
+    e_sat_site = e_sat * p_h / e_st
+    e_air_site = e_air * p_h / e_st
+
+    vpd = e_sat_site - e_air_site
+
+    return round(vpd / 10, 3)
 
 
 @router.get("/all", response_model=List[schemas.FieldSummary])
@@ -112,3 +144,123 @@ def delete_sensor(
     """Delete a sensor."""
     sensor = crud.sensor.delete(db, id=sensor_id)
     return sensor
+
+
+@router.get(
+    "/{field_id}/sensors/get-geostreams-data/soil-moisture/{year}",
+    response_model=schemas.SoilMoistureGeostreamsData,
+)
+def read_field_sensors_soil_moisture_geostreams_data(
+    field_id: str,
+    year: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Get all the sensors for the given field id."""
+    sensors = crud.field.get_sensors(db, id=field_id)
+    soil_data_endpoints = []
+    for sensor in sensors:
+        if sensor.sensor_type == "soil_moisture":
+            soil_data_endpoints.append(
+                {
+                    "depth": sensor.depth,
+                    "uri": f"{settings.GEOSTREAMS_API_STR}cache/day/{sensor.sensor_id}?since={year}-01-01T00:00:00&until={year}-12-31T00:00:00",
+                }
+            )
+    soil_data = defaultdict(dict)
+    for soil_data_endpoint in soil_data_endpoints:
+        response = requests.get(soil_data_endpoint["uri"])
+        data = response.json()
+        soil_data[soil_data_endpoint["depth"]] = {
+            "data": [
+                {
+                    "average": d["average"],
+                    "year": d["year"],
+                    "month": d["month"],
+                    "day": d["day"],
+                    "label": d["label"],
+                }
+                for d in data["properties"]["soil_moisture"]
+            ]
+        }
+
+    return {"depth_soil_moisture_data": soil_data}
+
+
+@router.get(
+    "/{field_id}/sensors/get-geostreams-data/weather/{year}",
+    response_model=schemas.WeatherGeostreamsData,
+)
+def read_field_sensors_weather_geostreams_data(
+    field_id: str,
+    year: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Get all the sensors for the given field id."""
+    sensors = crud.field.get_sensors(db, id=field_id)
+    weather_data_endpoints = []
+    for sensor in sensors:
+        if sensor.sensor_type == "weather":
+            weather_data_endpoints.append(
+                f"{settings.GEOSTREAMS_API_STR}cache/day/{sensor.sensor_id}?since={year}-01-01T00:00:00&until={year}-12-31T00:00"
+            )
+    weather_data = defaultdict(dict)
+    # Only written assuming 1 sensor per field change its shape if need to accomodate multiple sensors
+    for weather_data_endpoint in weather_data_endpoints:
+        response = requests.get(weather_data_endpoint)
+        data = response.json()
+
+        temp_avg_air = [
+            {
+                "average": d["average"],
+                "year": d["year"],
+                "month": d["month"],
+                "day": d["day"],
+                "label": d["label"],
+            }
+            for d in data["properties"]["avg_air_temp"]
+        ]
+        temp_avg_air.sort(key=lambda x: x["label"])
+
+        temp_rel_hum = [
+            {
+                "average": d["average"],
+                "year": d["year"],
+                "month": d["month"],
+                "day": d["day"],
+                "label": d["label"],
+            }
+            for d in data["properties"]["avg_rel_hum"]
+        ]
+        temp_rel_hum.sort(key=lambda x: x["label"])
+
+        temp_precip = [
+            {
+                "average": round(d["average"] * 25.4, 2),  # convert to mm
+                "year": d["year"],
+                "month": d["month"],
+                "day": d["day"],
+                "label": d["label"],
+            }
+            for d in data["properties"]["precip"]
+        ]
+        temp_precip.sort(key=lambda x: x["label"])
+
+        # calculate VPD
+        vpd_data = []
+        for i in zip(temp_avg_air, temp_rel_hum):
+            vpd = get_vpd(i[0]["average"], i[1]["average"])
+            vpd_data.append(
+                {
+                    "average": vpd,
+                    "year": i[0]["year"],
+                    "month": i[0]["month"],
+                    "day": i[0]["day"],
+                    "label": i[0]["label"],
+                }
+            )
+
+        weather_data["avg_air_temp"] = temp_avg_air
+        weather_data["avg_vpd"] = vpd_data
+        weather_data["precipitation"] = temp_precip
+
+    return {"weather_data": weather_data}

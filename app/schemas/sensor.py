@@ -9,6 +9,7 @@ class SensorBase(BaseModel):
     """Base model for sensors"""
 
     depth: str
+    sensor_type: str
     sensor_id: int
 
 

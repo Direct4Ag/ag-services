@@ -30,10 +30,10 @@ class Field(Base):
     )
 
     farm_ref_id: str = Column(
-        UUID(as_uuid=True), ForeignKey("farms.id", ondelete="CASCADE"), nullable=False
+        UUID(as_uuid=True), ForeignKey("farms.id"), nullable=False
     )
 
-    farm: "Farm" = relationship("Farm", back_populates="fields")
+    farm: "Farm" = relationship("Farm", back_populates="fields", cascade="all, delete")
     researches: List["Research"] = relationship(
         "Research", back_populates="field", cascade="all, delete"
     )

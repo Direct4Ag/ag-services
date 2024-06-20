@@ -77,3 +77,21 @@ class FieldGeoJSON(BaseModel):
     class Config:
         orm_mode = True
         arbitrary_types_allowed = True
+
+
+class SoilMoistureGeostreamsData(BaseModel):
+    """Model for Geostreams data"""
+
+    depth_soil_moisture_data: dict
+
+    class Config:
+        arbitrary_types_allowed = True
+
+
+class WeatherGeostreamsData(BaseModel):
+    """Model for Geostreams data"""
+
+    weather_data: dict
+
+    class Config:
+        arbitrary_types_allowed = True

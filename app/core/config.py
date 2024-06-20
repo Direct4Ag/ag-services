@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     API_STR: str = "/api"
+    GEOSTREAMS_API_STR: str
 
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:3000"]'
