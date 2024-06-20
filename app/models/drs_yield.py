@@ -25,9 +25,11 @@ class DroughtResistantSeedYield(Base):
     crop_yield: float = Column(Float, nullable=True)
 
     research_ref_id: str = Column(
-        UUID(as_uuid=True), ForeignKey("research.id"), nullable=False
+        UUID(as_uuid=True),
+        ForeignKey("research.id"),
+        nullable=False,
     )
 
     research: "Research" = relationship(
-        "Research", back_populates="drought_resistant_seed_yield"
+        "Research", back_populates="drought_resistant_seed_yield", cascade="all, delete"
     )

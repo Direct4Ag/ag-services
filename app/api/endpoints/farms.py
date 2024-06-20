@@ -46,3 +46,23 @@ def read_farm_fields(
     """Get all the fields for the given farm id."""
     fields = crud.farm.get_fields(db, id=farm_id)
     return fields
+
+
+@router.post("/", response_model=schemas.FarmSummary)
+def create_farm(
+    farm_in: schemas.FarmCreate,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Create a new farm."""
+    farm = crud.farm.create(db, obj_in=farm_in)
+    return farm
+
+
+@router.delete("/{farm_id}", response_model=schemas.FarmSummary)
+def delete_farm(
+    farm_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Delete a farm."""
+    farm = crud.farm.delete(db, id=farm_id)
+    return farm

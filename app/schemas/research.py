@@ -10,7 +10,6 @@ from app.schemas.field import FieldDetails
 class ResearchBase(BaseModel):
     """Base model for researches"""
 
-    id: uuid.UUID
     research_name: str
     research_area: str
     research_type: str
@@ -18,6 +17,8 @@ class ResearchBase(BaseModel):
 
 class ResearchSummaryInDB(ResearchBase):
     """Model for research in DB"""
+
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -34,6 +35,7 @@ class ResearchDetailBase(ResearchBase):
 class ResearchDetailInDB(ResearchDetailBase):
     field: FieldDetails
     # field: FieldSummary
+    id: uuid.UUID
 
     class Config:
         orm_mode = True

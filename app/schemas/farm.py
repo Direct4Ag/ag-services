@@ -8,13 +8,14 @@ from pydantic import BaseModel
 class FarmBase(BaseModel):
     """Base model for farms"""
 
-    id: uuid.UUID
     farm_name: str
     location_name: str
 
 
 class FarmSummaryInDB(FarmBase):
     """Model for farms in DB"""
+
+    id: uuid.UUID
 
     class Config:
         orm_mode = True

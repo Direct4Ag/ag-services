@@ -72,3 +72,43 @@ def read_field_sensors(
     """Get all the sensors for the given field id."""
     sensors = crud.field.get_sensors(db, id=field_id)
     return sensors
+
+
+@router.post("/", response_model=schemas.FieldSummary)
+def create_field(
+    field_in: schemas.FieldCreate,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Create a new field."""
+    field = crud.field.create(db, obj_in=field_in)
+    return field
+
+
+@router.delete("/{field_id}", response_model=schemas.FieldSummary)
+def delete_field(
+    field_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Delete a field."""
+    field = crud.field.delete(db, id=field_id)
+    return field
+
+
+@router.post("/sensors", response_model=schemas.SensorSummary)
+def create_sensor(
+    sensor_in: schemas.SensorCreate,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Create a new sensor."""
+    sensor = crud.sensor.create(db, obj_in=sensor_in)
+    return sensor
+
+
+@router.delete("/sensors/{sensor_id}", response_model=schemas.SensorSummary)
+def delete_sensor(
+    sensor_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Delete a sensor."""
+    sensor = crud.sensor.delete(db, id=sensor_id)
+    return sensor

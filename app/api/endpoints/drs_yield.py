@@ -73,3 +73,23 @@ def read_drs_yield_by_line(
             detail=f"Drought resistant seeds yield not found for {line}",
         )
     return drs_yield
+
+
+@router.post("/", response_model=schemas.DRSYieldDetails)
+def create_drs_yield(
+    drs_yield_in: schemas.DRSYieldCreate,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Create a new drought resistant seeds yield."""
+    drs_yield = crud.drs_yield.create(db, obj_in=drs_yield_in)
+    return drs_yield
+
+
+@router.delete("/{drs_yield_id}", response_model=schemas.DRSYieldDetails)
+def delete_drs_yield(
+    drs_yield_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Delete a drought resistant seeds yield."""
+    drs_yield = crud.drs_yield.delete(db, id=drs_yield_id)
+    return drs_yield

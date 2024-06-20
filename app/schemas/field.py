@@ -13,7 +13,6 @@ from app.schemas.farm import FarmSummary
 class FieldBase(BaseModel):
     """Base model for fields"""
 
-    id: uuid.UUID
     field_name: str
     coordinates: List[float] = Field(min_items=2, max_items=2)
 
@@ -25,6 +24,8 @@ class FieldBase(BaseModel):
 
 class FieldSummaryInDB(FieldBase):
     """Model for farms in DB"""
+
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -40,6 +41,7 @@ class FieldDetailBase(FieldBase):
 
 class FieldDetailInDB(FieldDetailBase):
     farm: FarmSummary
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -49,12 +51,21 @@ class FieldDetails(FieldDetailInDB):
     pass
 
 
-class FieldCreate(FieldDetailBase):
-    pass
+# class FieldCreate(FieldDetailBase):
+#     field_shape: str
+
+
+class FieldCreate(BaseModel):
+    """Model for creating fields"""
+
+    field_name: str
+    coordinates: str
+    farm_ref_id: uuid.UUID
+    field_shape: str
 
 
 class FieldUpdate(FieldDetailBase):
-    pass
+    field_shape: str
 
 
 class FieldGeoJSON(BaseModel):

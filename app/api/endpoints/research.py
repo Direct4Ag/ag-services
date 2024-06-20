@@ -58,3 +58,23 @@ def read_research_by(
         db, research_area=research_area, research_type=research_type
     )
     return research
+
+
+@router.post("/", response_model=schemas.ResearchDetails)
+def create_research(
+    research_in: schemas.ResearchCreate,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Create new research."""
+    research = crud.research.create(db, obj_in=research_in)
+    return research
+
+
+@router.delete("/{research_id}", response_model=schemas.ResearchDetails)
+def delete_research(
+    research_id: str,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """Delete research."""
+    research = crud.research.delete(db, id=research_id)
+    return research

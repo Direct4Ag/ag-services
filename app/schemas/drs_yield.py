@@ -11,7 +11,6 @@ from app.schemas.research import ResearchSummary
 class DRSYieldBase(BaseModel):
     """Base model for Drought Resistant Seed Yield"""
 
-    id: uuid.UUID
     replicate: int
     line: str
     planting_date: date
@@ -21,6 +20,8 @@ class DRSYieldBase(BaseModel):
 
 class DRSYieldSummaryInDB(DRSYieldBase):
     """Model for Drought Resistant Seed Yield in DB"""
+
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -37,6 +38,7 @@ class DRSYieldDetailBase(DRSYieldBase):
 class DRSYieldDetailInDB(DRSYieldDetailBase):
     # research: ResearchDetails
     research: ResearchSummary
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
