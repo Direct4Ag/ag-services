@@ -31,9 +31,7 @@ class Research(Base):
         UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False
     )
 
-    field: "Field" = relationship(
-        "Field", back_populates="researches", cascade="all, delete"
-    )
+    field: "Field" = relationship("Field", back_populates="researches")
 
     drought_resistant_seed_yield: List["DroughtResistantSeedYield"] = relationship(
         "DroughtResistantSeedYield", back_populates="research", cascade="all, delete"

@@ -24,6 +24,4 @@ class Sensors(Base):
         UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False
     )
 
-    field: "Field" = relationship(
-        "Field", back_populates="sensors", cascade="all, delete"
-    )
+    field: "Field" = relationship("Field", back_populates="sensors")

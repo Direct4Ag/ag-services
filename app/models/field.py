@@ -33,7 +33,7 @@ class Field(Base):
         UUID(as_uuid=True), ForeignKey("farms.id"), nullable=False
     )
 
-    farm: "Farm" = relationship("Farm", back_populates="fields", cascade="all, delete")
+    farm: "Farm" = relationship("Farm", back_populates="fields")
     researches: List["Research"] = relationship(
         "Research", back_populates="field", cascade="all, delete"
     )

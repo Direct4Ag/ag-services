@@ -31,5 +31,5 @@ class DroughtResistantSeedYield(Base):
     )
 
     research: "Research" = relationship(
-        "Research", back_populates="drought_resistant_seed_yield", cascade="all, delete"
+        "Research", back_populates="drought_resistant_seed_yield"
     )
