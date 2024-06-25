@@ -10,6 +10,7 @@ class SensorBase(BaseModel):
 
     id: uuid.UUID
     depth: str
+    sensor_type: str
     sensor_id: int
 
 

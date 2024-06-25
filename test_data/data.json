@@ -13,11 +13,13 @@
                     "sensors": [
                         {
                             "sensorId": 1,
-                            "depth": "5cm"
+                            "depth": "5cm",
+                            "sensorType": "soil_moisture"
                         },
                         {
                             "sensorId": 2,
-                            "depth": "15cm"
+                            "depth": "15cm",
+                            "sensorType": "soil_moisture"
                         }
                     ],
                     "drs_yield_data": []
@@ -37,11 +39,13 @@
                     "sensors": [
                         {
                             "sensorId": 3,
-                            "depth": "30cm"
+                            "depth": "30cm",
+                            "sensorType": "soil_moisture"
                         },
                         {
                             "sensorId": 4,
-                            "depth": "50cm"
+                            "depth": "50cm",
+                            "sensorType": "soil_moisture"
                         }
                     ],
                     "drs_yield_data": [
@@ -76,11 +80,13 @@
                     "sensors": [
                         {
                             "sensorId": 5,
-                            "depth": "30cm"
+                            "depth": "30cm",
+                            "sensorType": "soil_moisture"
                         },
                         {
                             "sensorId": 6,
-                            "depth": "50cm"
+                            "depth": "50cm",
+                            "sensorType": "soil_moisture"
                         }
                     ],
                     "drs_yield_data": []
@@ -100,11 +106,13 @@
                     "sensors": [
                         {
                             "sensorId": 7,
-                            "depth": "30cm"
+                            "depth": "30cm",
+                            "sensorType": "soil_moisture"
                         },
                         {
                             "sensorId": 9,
-                            "depth": "50cm"
+                            "depth": "50cm",
+                            "sensorType": "soil_moisture"
                         }
                     ],
                     "drs_yield_data": []

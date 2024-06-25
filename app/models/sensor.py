@@ -16,7 +16,8 @@ class Sensors(Base):
     __tablename__ = "sensors"
 
     id: uuid.UUID = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    depth: str = Column(String(200), nullable=False)
+    depth: str = Column(String(200), nullable=True, default="")
+    sensor_type: str = Column(String(200), nullable=True, default="")
     sensor_id: int = Column(Integer, nullable=False)
 
     field_ref_id: str = Column(
