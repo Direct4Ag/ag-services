@@ -8,7 +8,6 @@ from app.schemas.field import FieldDetails
 class SensorBase(BaseModel):
     """Base model for sensors"""
 
-    id: uuid.UUID
     depth: str
     sensor_type: str
     sensor_id: int
@@ -16,6 +15,8 @@ class SensorBase(BaseModel):
 
 class SensorSummaryInDB(SensorBase):
     """Model for sensors in DB"""
+
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -31,6 +32,7 @@ class SensorDetailBase(SensorBase):
 
 class SensorDetailInDB(SensorDetailBase):
     field: FieldDetails
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
