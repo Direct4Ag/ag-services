@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - test_data folder to mock data for actions [#35](https://github.com/Direct4Ag/ag-services/issues/35)
 - Endpoints for Drought Resistant Seed Yield data [#37](https://github.com/Direct4Ag/ag-services/issues/37)
 - Altered sensor table to hold type field and add geostreams data fetching endpoints [#39](https://github.com/Direct4Ag/ag-services/issues/39)
+- Added Create and Delete endpoints for all the models [#42](https://github.com/Direct4Ag/ag-services/issues/42)
 
 ### Fixed
 
