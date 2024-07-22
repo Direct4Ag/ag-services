@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
 if TYPE_CHECKING:
-    from app.models import DroughtResistantSeedYield, Field
+    from app.models import CropRotation, DroughtResistantSeedYield, Field
 
 
 class Research(Base):
@@ -35,4 +35,8 @@ class Research(Base):
 
     drought_resistant_seed_yield: List["DroughtResistantSeedYield"] = relationship(
         "DroughtResistantSeedYield", back_populates="research", cascade="all, delete"
+    )
+
+    crop_rotation: List["CropRotation"] = relationship(
+        "CropRotation", back_populates="research", cascade="all, delete"
     )

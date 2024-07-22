@@ -1,3 +1,4 @@
+from .crop_rotation import CropRotation
 from .drs_yield import DroughtResistantSeedYield
 from .farm import Farm
 from .field import Field

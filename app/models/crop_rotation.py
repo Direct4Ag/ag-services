@@ -2,7 +2,7 @@ import uuid
 from datetime import date  # noqa
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column, Date, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, Date, Float, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -12,19 +12,21 @@ if TYPE_CHECKING:
     from app.models import Research
 
 
-class DroughtResistantSeedYield(Base):
-    """The Drought Resistant Seed Yield table contains the information about the yield of the drought resistant seeds."""
+class CropRotation(Base):
+    """The Crop Rotation table contains the information about the crop rotation."""
 
-    __tablename__ = "drought_resistant_seed_yield"
+    __tablename__ = "crop_rotation"
 
     id: uuid.UUID = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    replicate: int = Column(Integer, nullable=True)
-    line: str = Column(String(200), nullable=False)
     planting_date: date = Column(Date, nullable=False)  # noqa: F811
     harvest_date: date = Column(Date, nullable=False)  # noqa: F811
     crop_yield: float = Column(Float, nullable=True)
+    yield_unit: str = Column(String(50), nullable=True)
+    seeding_rate: float = Column(Float, nullable=True)
+    seeding_rate_unit: str = Column(String(50), nullable=True)
+    fertilizer_application: str = Column(Text, nullable=True)
 
-    research_ref_id: str = Column(
+    crop_rot_research_ref_id: str = Column(
         UUID(as_uuid=True),
         ForeignKey("research.id"),
         nullable=False,
@@ -32,6 +34,6 @@ class DroughtResistantSeedYield(Base):
 
     research: "Research" = relationship(
         "Research",
-        back_populates="drought_resistant_seed_yield",
-        foreign_keys=[research_ref_id],
+        back_populates="crop_rotation",
+        foreign_keys=[crop_rot_research_ref_id],
     )

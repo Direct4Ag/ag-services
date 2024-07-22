@@ -141,6 +141,26 @@ class Data:
                         }
                         crud.drs_yield.create(self.db, obj_in=obj_in)
 
+                # Insert Crop Rotation Data if available
+                if len(field["crop_rotation_yield"]) > 0:
+                    logger.info(
+                        f"Importing Crop Rotation Data for research: {field['researchName']}"
+                    )
+                    for crop_rotation in field["crop_rotation_yield"]:
+                        obj_in = {
+                            "planting_date": parse_date(crop_rotation["planting_date"]),
+                            "harvest_date": parse_date(crop_rotation["harvest_date"]),
+                            "crop_yield": crop_rotation["crop_yield"],
+                            "yield_unit": crop_rotation["yield_unit"],
+                            "seeding_rate": crop_rotation["seeding_rate"],
+                            "seeding_rate_unit": crop_rotation["seeding_rate_unit"],
+                            "fertilizer_application": crop_rotation[
+                                "fertilizer_application"
+                            ],
+                            "crop_rot_research_ref_id": research.id,
+                        }
+                        crud.crop_rotation.create(self.db, obj_in=obj_in)
+
                 # Insert Sensors
                 for sensor in field["sensors"]:
                     logger.info(
