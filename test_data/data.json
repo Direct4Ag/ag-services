@@ -22,7 +22,8 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": []
                 }
             ]
         },
@@ -63,7 +64,8 @@
                             "harvest_date": "10/27/22",
                             "crop_yield": 240.2234
                         }
-                    ]
+                    ],
+                    "crop_rotation_yield": []
                 }
             ]
         },
@@ -89,7 +91,27 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": [
+                        {
+                            "planting_date": "04/29/15",
+                            "harvest_date": "09/30/15",
+                            "crop_yield": 120,
+                            "yield_unit": "bu/A",
+                            "seeding_rate": 37000,
+                            "seeding_rate_unit": "seeds/A",
+                            "fertilizer_application": "Total of 180 lbs/A (202 kg/ha) split applied as follows: 20 lbs of N/A as starter with planter (combination 2x2 and pop-up) and 160 lbs of N/A as UAN (28%) side-dress on 05-29-2015"
+                        },
+                        {
+                            "planting_date": "04/30/18",
+                            "harvest_date": "09/30/18",
+                            "crop_yield": 260,
+                            "yield_unit": "bu/A",
+                            "seeding_rate": 38000,
+                            "seeding_rate_unit": "seeds/A",
+                            "fertilizer_application": "Total of 170 lbs/A (190 kg/ha) split applied as follows: 20 lbs of N/A as starter with planter (combination 2x2 and pop-up) and 150 lbs of N/A as UAN (32%) side-dress on 05-29-2015"
+                        }
+                    ]
                 }
             ]
         },
@@ -115,7 +137,8 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": []
                 }
             ]
         }
