@@ -38,7 +38,7 @@ def read_crop_rotation_details(
 
 
 @router.get(
-    "/by_research_id/{research_id}", response_model=List[schemas.CropRotationSummary]
+    "/by_research_id/{research_id}", response_model=List[schemas.CropRotationDetails]
 )
 def read_crop_rotation_by_research_id(
     research_id: str,

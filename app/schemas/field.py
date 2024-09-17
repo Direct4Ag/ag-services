@@ -79,6 +79,16 @@ class FieldGeoJSON(BaseModel):
         arbitrary_types_allowed = True
 
 
+class NitrateConcentrationGeostreamsData(BaseModel):
+    """Model for Geostreams data"""
+
+    nitrate_concentration_data: list
+    year: int
+
+    class Config:
+        arbitrary_types_allowed = True
+
+
 class SoilMoistureGeostreamsData(BaseModel):
     """Model for Geostreams data"""
 

@@ -1,10 +1,12 @@
-"""Pydantic models for representing Drought Resistant Seed Yield"""
+"""Pydantic models for representing Crop rotation Yield"""
 
 import uuid
 from datetime import date
+from typing import List
 
 from pydantic import BaseModel
 
+from app.schemas.fertilizer import FertilizerSummary
 from app.schemas.research import ResearchSummary
 
 
@@ -17,7 +19,8 @@ class CropRotationBase(BaseModel):
     yield_unit: str
     seeding_rate: float
     seeding_rate_unit: str
-    fertilizer_application: str
+    total_fertilizer_applied: float
+    total_fertilizer_applied_unit: str
 
 
 class CropRotationSummaryInDB(CropRotationBase):
@@ -38,6 +41,7 @@ class CropRotationDetailBase(CropRotationBase):
 
 
 class CropRotationDetailInDB(CropRotationDetailBase):
+    fertilizers: List[FertilizerSummary]
     research: ResearchSummary
     id: uuid.UUID
 

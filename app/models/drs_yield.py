@@ -23,6 +23,7 @@ class DroughtResistantSeedYield(Base):
     planting_date: date = Column(Date, nullable=False)  # noqa: F811
     harvest_date: date = Column(Date, nullable=False)  # noqa: F811
     crop_yield: float = Column(Float, nullable=True)
+    yield_unit: str = Column(String(50), nullable=True)
 
     research_ref_id: str = Column(
         UUID(as_uuid=True),
