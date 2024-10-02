@@ -13,6 +13,7 @@ from app.schemas.research import ResearchSummary
 class CropRotationBase(BaseModel):
     """Base model for Crop Rotation"""
 
+    crop: str
     planting_date: date
     harvest_date: date
     crop_yield: float

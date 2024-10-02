@@ -151,6 +151,7 @@ class Data:
                         obj_in = {
                             "planting_date": parse_date(crop_rotation["planting_date"]),
                             "harvest_date": parse_date(crop_rotation["harvest_date"]),
+                            "crop": crop_rotation["crop"],
                             "crop_yield": crop_rotation["crop_yield"],
                             "yield_unit": crop_rotation["yield_unit"],
                             "seeding_rate": crop_rotation["seeding_rate"],

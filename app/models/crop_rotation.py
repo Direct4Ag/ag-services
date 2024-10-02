@@ -18,6 +18,7 @@ class CropRotation(Base):
     __tablename__ = "crop_rotation"
 
     id: uuid.UUID = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    crop: str = Column(String(50), nullable=True)
     planting_date: date = Column(Date, nullable=False)  # noqa: F811
     harvest_date: date = Column(Date, nullable=False)  # noqa: F811
     crop_yield: float = Column(Float, nullable=True)
