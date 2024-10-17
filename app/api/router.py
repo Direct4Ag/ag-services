@@ -2,7 +2,13 @@ from fastapi import APIRouter
 
 from app.core.config import get_settings
 
-from .endpoints import drs_yield_router, farms_router, fields_router, research_router
+from .endpoints import (
+    crop_rotation_yield_router,
+    drs_yield_router,
+    farms_router,
+    fields_router,
+    research_router,
+)
 
 settings = get_settings()
 
@@ -15,4 +21,9 @@ api_router.include_router(
     drs_yield_router,
     prefix="/drought-resistant-seeds",
     tags=["drought_resistant_seed_yield"],
+)
+api_router.include_router(
+    crop_rotation_yield_router,
+    prefix="/crop-rotation-yield",
+    tags=["crop_rotation_yield"],
 )

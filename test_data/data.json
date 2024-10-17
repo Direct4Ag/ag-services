@@ -22,7 +22,8 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": []
                 }
             ]
         },
@@ -54,16 +55,19 @@
                             "line": "R1151AM",
                             "planting_date": "05/16/22",
                             "harvest_date": "10/27/22",
-                            "crop_yield": 239.3907
+                            "crop_yield": 239.3907,
+                            "yield_unit": "bu/A"
                         },
                         {
                             "replicate": 1,
                             "line": "P1331AM",
                             "planting_date": "05/16/22",
                             "harvest_date": "10/27/22",
-                            "crop_yield": 240.2234
+                            "crop_yield": 240.2234,
+                            "yield_unit": "bu/A"
                         }
-                    ]
+                    ],
+                    "crop_rotation_yield": []
                 }
             ]
         },
@@ -89,7 +93,63 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": [
+                        {
+                            "planting_date": "04/29/15",
+                            "harvest_date": "09/30/15",
+                            "crop": "Corn",
+                            "crop_yield": 120,
+                            "yield_unit": "bu/A",
+                            "seeding_rate": 37000,
+                            "seeding_rate_unit": "seeds/A",
+                            "total_fertilizer_applied": 180,
+                            "total_fertilizer_applied_unit": "lbs/A",
+                            "fertilizer": [
+                                {
+                                    "fertilizer_date": "04/29/15",
+                                    "fertilizer_rate": 20,
+                                    "fertilizer_rate_unit": "lbs/A",
+                                    "fertilizer_type": "UAN (28%) - the starter",
+                                    "description": "Starter with planter (combination 2x2 and pop-up)"
+                                },
+                                {
+                                    "fertilizer_date": "05/29/15",
+                                    "fertilizer_rate": 160,
+                                    "fertilizer_rate_unit": "lbs/A",
+                                    "fertilizer_type": "UAN (28%) - the side dress",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        {
+                            "planting_date": "04/30/18",
+                            "harvest_date": "09/30/18",
+                            "crop": "Corn",
+                            "crop_yield": 260,
+                            "yield_unit": "bu/A",
+                            "seeding_rate": 38000,
+                            "seeding_rate_unit": "seeds/A",
+                            "total_fertilizer_applied": 170,
+                            "total_fertilizer_applied_unit": "lbs/A",
+                            "fertilizer": [
+                                {
+                                    "fertilizer_date": "04/30/18",
+                                    "fertilizer_rate": 20,
+                                    "fertilizer_rate_unit": "lbs/A",
+                                    "fertilizer_type": "UAN (32%) - the starter",
+                                    "description": "Starter with planter (combination 2x2 and pop-up)"
+                                },
+                                {
+                                    "fertilizer_date": "05/29/18",
+                                    "fertilizer_rate": 150,
+                                    "fertilizer_rate_unit": "lbs/A",
+                                    "fertilizer_type": "UAN (32%) - the side dress",
+                                    "description": ""
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -115,7 +175,8 @@
                             "sensorType": "soil_moisture"
                         }
                     ],
-                    "drs_yield_data": []
+                    "drs_yield_data": [],
+                    "crop_rotation_yield": []
                 }
             ]
         }

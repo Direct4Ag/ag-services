@@ -16,6 +16,7 @@ class DRSYieldBase(BaseModel):
     planting_date: date
     harvest_date: date
     crop_yield: float
+    yield_unit: str
 
 
 class DRSYieldSummaryInDB(DRSYieldBase):

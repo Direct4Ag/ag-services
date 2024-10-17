@@ -6,7 +6,7 @@ import requests
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from app import crud, schemas
+from app import crud, models, schemas
 from app.api import deps
 from app.core.config import get_settings
 
@@ -39,6 +39,25 @@ def get_vpd(T, RH, elevation=0):
     vpd = e_sat_site - e_air_site
 
     return round(vpd / 10, 3)
+
+
+def get_geostream_uris(
+    sensors: List[models.Sensors], sensor_type: str, year: str
+) -> List[dict]:
+    data_endpoints = []
+    for sensor in sensors:
+        uri = f"{settings.GEOSTREAMS_API_STR}cache/day/{sensor.sensor_id}?since={year}-01-01T00:00:00&until={year}-12-31T00:00:00"
+        if sensor.sensor_type == sensor_type:
+            if sensor_type == "soil_moisture":
+                data_endpoints.append(
+                    {
+                        "depth": sensor.depth,
+                        "uri": uri,
+                    }
+                )
+            elif sensor_type in ["weather", "nitrogen_conc"]:
+                data_endpoints.append(uri)
+    return data_endpoints
 
 
 @router.get("/all", response_model=List[schemas.FieldSummary])
@@ -147,6 +166,40 @@ def delete_sensor(
 
 
 @router.get(
+    "/{field_id}/sensors/get-geostreams-data/nitrate-conc/{year}",
+    response_model=schemas.NitrateConcentrationGeostreamsData,
+)
+def read_field_sensors_nitrate_concentration_geostreams_data(
+    field_id: str,
+    year: str,
+    db: Session = Depends(deps.get_db),
+):
+    """Get all the sensors for the given field id."""
+    sensors = crud.field.get_sensors(db, id=field_id)
+    print(sensors)
+    nitrate_data_endpoints = get_geostream_uris(sensors, "nitrogen_conc", year)
+    nitrate_data = []
+    print(nitrate_data_endpoints)
+    for nitrate_data_endpoint in nitrate_data_endpoints:
+        response = requests.get(nitrate_data_endpoint)
+        data = response.json()
+        nitrate_data.extend(
+            [
+                {
+                    "average": d["average"],
+                    "year": d["year"],
+                    "month": d["month"],
+                    "day": d["day"],
+                    "label": d["label"],
+                }
+                for d in data["properties"]["nitrate_conc"]
+            ]
+        )
+
+    return {"nitrate_concentration_data": nitrate_data, "year": year}
+
+
+@router.get(
     "/{field_id}/sensors/get-geostreams-data/soil-moisture/{year}",
     response_model=schemas.SoilMoistureGeostreamsData,
 )
@@ -157,15 +210,7 @@ def read_field_sensors_soil_moisture_geostreams_data(
 ) -> Any:
     """Get all the sensors for the given field id."""
     sensors = crud.field.get_sensors(db, id=field_id)
-    soil_data_endpoints = []
-    for sensor in sensors:
-        if sensor.sensor_type == "soil_moisture":
-            soil_data_endpoints.append(
-                {
-                    "depth": sensor.depth,
-                    "uri": f"{settings.GEOSTREAMS_API_STR}cache/day/{sensor.sensor_id}?since={year}-01-01T00:00:00&until={year}-12-31T00:00:00",
-                }
-            )
+    soil_data_endpoints = get_geostream_uris(sensors, "soil_moisture", year)
     soil_data = defaultdict(dict)
     for soil_data_endpoint in soil_data_endpoints:
         response = requests.get(soil_data_endpoint["uri"])
@@ -197,12 +242,7 @@ def read_field_sensors_weather_geostreams_data(
 ) -> Any:
     """Get all the sensors for the given field id."""
     sensors = crud.field.get_sensors(db, id=field_id)
-    weather_data_endpoints = []
-    for sensor in sensors:
-        if sensor.sensor_type == "weather":
-            weather_data_endpoints.append(
-                f"{settings.GEOSTREAMS_API_STR}cache/day/{sensor.sensor_id}?since={year}-01-01T00:00:00&until={year}-12-31T00:00"
-            )
+    weather_data_endpoints = get_geostream_uris(sensors, "weather", year)
     weather_data = defaultdict(dict)
     # Only written assuming 1 sensor per field change its shape if need to accomodate multiple sensors
     for weather_data_endpoint in weather_data_endpoints:
@@ -262,5 +302,6 @@ def read_field_sensors_weather_geostreams_data(
         weather_data["avg_air_temp"] = temp_avg_air
         weather_data["avg_vpd"] = vpd_data
         weather_data["precipitation"] = temp_precip
+        weather_data["year"] = year
 
     return {"weather_data": weather_data}
